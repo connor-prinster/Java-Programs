@@ -1,0 +1,1 @@
+I added a picture to the "data" folder just to get used to uploading pictures.

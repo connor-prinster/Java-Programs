@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"cs2410.assn4.controller","l":"Controller"},{"p":"cs2410.assn4.interfaces","l":"CustomPane"},{"p":"cs2410.assn4","l":"Main"},{"p":"cs2410.assn4.model","l":"ReadFromFile"},{"p":"cs2410.assn4.model","l":"WriteToFile"}]
