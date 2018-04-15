@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<BorderPane id="borderPane" prefHeight="700.0" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="cs2410.assn7.controller.MainController">
+  <bottom>
+    <fx:include fx:id="highScoreBar" source="scoreBar.fxml" />
+  </bottom>
+  <top>
+    <fx:include fx:id="topMenuBar" source="menuBar.fxml" />
+  </top>
+    <center>
+        <fx:include fx:id="fourGrid" source="colorPanel.fxml"/>
+    </center>
+</BorderPane>

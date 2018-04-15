@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<MenuBar id="topMenuBar" rotate="0.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="cs2410.assn7.controller.MenuBarController">
+  <menus>
+    <Menu id="settingsDropDown" mnemonicParsing="false" text="Settings">
+      <items>
+        <MenuItem id="chooseColorsMenuItem" mnemonicParsing="false" text="Choose Colors" />
+        <MenuItem id="chooseModeMenuItem" mnemonicParsing="false" text="Choose Mode" />
+      </items>
+    </Menu>
+    <Menu id="statsDropDown" mnemonicParsing="false" text="Stats">
+      <items>
+        <MenuItem id="highScoreMenuItem" mnemonicParsing="false" text="High Scores" />
+        <MenuItem id="historyPopUpMenuItem" mnemonicParsing="false" text="History" />
+        <MenuItem id="clearHistoryMenuItem" mnemonicParsing="false" text="Clear History" />
+      </items>
+    </Menu>
+    <Menu id="helpDropDown" mnemonicParsing="false" text="Help">
+      <items>
+        <MenuItem id="aboutMenuItem" mnemonicParsing="false" text="About" />
+        <MenuItem id="rulesMenuItem" mnemonicParsing="false" text="Rules" />
+      </items>
+    </Menu>
+  </menus>
+</MenuBar>

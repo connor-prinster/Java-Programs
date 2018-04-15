@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<HBox prefHeight="75.0" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="cs2410.assn7.controller.ScoreBarController">
+  <children>
+    <Button id="playBtn" contentDisplay="LEFT" graphicTextGap="2.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="110.0" text="Play" textAlignment="LEFT" translateX="0.0" translateY="0.0" wrapText="false" HBox.hgrow="ALWAYS">
+      <font>
+        <Font size="30.0" />
+      </font>
+      <HBox.margin>
+        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+      </HBox.margin>
+    </Button>
+    <Label fx:id="currentScoreLabel" prefHeight="55.0" prefWidth="282.0" text="Current Score:">
+      <font>
+        <Font size="35.0" fx:id="x1" />
+      </font>
+      <HBox.margin>
+        <Insets bottom="15.0" left="5.0" top="15.0" fx:id="x2" />
+      </HBox.margin>
+    </Label>
+    <Label id="highScoreLable" fx:id="highScoreLabel" font="$x1" prefHeight="55.0" prefWidth="244.0" text="High Score:" HBox.margin="$x2" />
+  </children>
+</HBox>
