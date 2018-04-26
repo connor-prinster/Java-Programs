@@ -8,9 +8,17 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import view.Cell;
+
+import java.util.ArrayList;
 
 public class Controller
 {
+    //===================================//
+    //===================================//
+    //            FXML VALUES            //
+    //===================================//
+    //===================================//
     //==================//
     //  Center Objects  //
     //==================//
@@ -40,9 +48,30 @@ public class Controller
     @FXML
     private Text timeText;  //will continually update to keep a valid time going
 
+    //===========================================//
+    //===========================================//
+    //            "GENERIC" VARIABLES            //
+    //===========================================//
+    //===========================================//
+
+    private ArrayList<Cell> cellArray = new ArrayList<>(0);  //just a simple grid of Cells
+    private int numBombs;    //will be set based on values not yet known
+    private int numSafes;    //will be set based on numBombs
+    int numGridRows = 20;
+    int numGridCols = 20;
+    boolean hasWon = false;     //will end the game but will also display a win screen
+    boolean hasLost = false;    //---display a lose screen
+    double percentGridBombs = .25;
+    boolean wasFirstCellSelected = false;   //if the first cell is selected, game starts
+
+
+
+
+
     public void initialize()
     {
         System.out.println("ballsack");
+
     }
 
 
