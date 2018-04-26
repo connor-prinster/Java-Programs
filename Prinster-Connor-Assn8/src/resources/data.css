@@ -1,5 +1,34 @@
-.opened
+.bomb
 {
     -fx-background-image: url("bomb.png");
+    -fx-background-size: 20 20;
+    -fx-background-repeat: no-repeat;
     -fx-background-position: center;
+}
+
+.question
+{
+    -fx-background-image: url("question.png");
+    -fx-background-size: 20 20;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.flagged
+{
+    -fx-background-image: url("flag.png");
+    -fx-background-size: 20 20;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.openNoBomb
+{
+    -fx-border-color: lightgray;
+    -fx-border-width: 1px;
+}
+
+.wrong
+{
+    -fx-background-color: LightCoral;
 }
