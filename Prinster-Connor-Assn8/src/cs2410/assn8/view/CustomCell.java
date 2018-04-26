@@ -1,15 +1,15 @@
-package view;
+package cs2410.assn8.view;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 
-public class Cell extends Button
+public class CustomCell extends Button
 {
     private boolean isBomb = false;
     private int flaggedState = 0;   //since there are different flagged states, this applies to a list of potential texts
     private boolean isOpen = false; //a simple bool to see if the cell is opened or not
 
-    public Cell()
+    public CustomCell()
     {
         isBomb = false;
         flaggedState = 0;
@@ -21,7 +21,7 @@ public class Cell extends Button
    //--------------------------------------//
    //  Change Style Based on flaggedState  //
    //--------------------------------------//
-    public void changeButtonIcon()
+    public void changeFlagStatus()
     {
         flaggedState++; //increase flaggedState by one
         flaggedState = flaggedState%3;  //will be a z-mod three
@@ -46,19 +46,33 @@ public class Cell extends Button
     //==========================================//
     //  Getter Functions for the Private Stuff  //
     //==========================================//
-    public boolean isOpen()
+    public boolean getIsOpen()
     {
         return isOpen;
     }
 
-    public boolean isBomb()
+    public boolean getIsBomb()
     {
         return isBomb;
     }
 
-    public int returnFlaggedState()
+    public int getFlaggedState()
     {
         return flaggedState;
     }
+
+    //==========================================//
+    //  Setter Functions for the Private Stuff  //
+    //==========================================//
+    public void setIsOpen(boolean whatToSetTo)
+    {
+        isOpen = whatToSetTo;
+    }
+
+    public void setIsBomb(boolean whatToSetTo)
+    {
+        isBomb = whatToSetTo;
+    }
+
 
 }
