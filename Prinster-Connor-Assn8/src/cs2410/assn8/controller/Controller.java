@@ -28,14 +28,14 @@ public class Controller
 
     private ArrayList<ArrayList<CustomCell>> grid = new ArrayList<>(0);
     private ArrayList<CustomCell> cellArray = new ArrayList<>(0);  /**just a simple grid of Cells*/
-    private int numBombs;   /**will be set based on values not yet known*/
-    private int numSafes;    /**will be set based on numBombs*/
-    private int numGridRows = 20;
-    private int numGridCols = 20;
+    private double numBombs;   /**will be set based on values not yet known*/
+    private double numSafes;    /**will be set based on numBombs*/
+    private int numGridRows = 10;
+    private int numGridCols = 10;
     private int numOfCells;
     boolean hasWon = false;     /**will end the game but will also display a win screen*/
     boolean hasLost = false;    /**---display a lose screen*/
-    private double percentGridBombs = .25;
+    private double percentGridBombs = .1;
     private boolean wasFirstCellSelected = false;   /**if the first cell is selected, game starts*/
     private CustomCell c = new CustomCell();
     private BooleanProperty isGameActive = new SimpleBooleanProperty(true);
@@ -77,26 +77,34 @@ public class Controller
 
 
 
-    public Controller() {
+    public Controller() /**standard constructor with no special stuff, that's for later*/
+    {
     }
 
-    //===========================================//
-    //===========================================//
 
     public void initialize()
     {
-        initializeGamePane();
-        initializeCellArray();  //set all the bombs
-        fillGridPane();
+        initializeGamePane();   /**must do this before doing it again when making the startButton start things*/
+        startButton.setOnAction(event -> {
+            isGameActive.setValue(true);
+            initializeGamePane();
+        });
         System.out.println("ballsack");
     }
 
     private void initializeGamePane()
     {
-        gamePane.getRowConstraints().clear();
-        gamePane.getColumnConstraints().clear();
-        grid.clear();
+        gamePane.getRowConstraints().clear();       //just clear any excess data
+        gamePane.getColumnConstraints().clear();    //---
+        grid.clear();   //clear the array of cells
         wasFirstCellSelected = true;
+        hasWon = false; //has not won
+        hasLost = false;    //has not lost either
+        initializeCellArray();  //set all the bombs
+        timeText.setText("Time:\n 00:00");
+        System.out.println(numBombs);
+        bombsLeftText.setText("Bombs Left:\n" + Double.toString(numBombs));
+        fillGridPane();
     }
 
     /** set up the array with bombs as well as shuffling it */
@@ -104,9 +112,8 @@ public class Controller
     {
         cellArray.clear();
         numOfCells = numGridCols * numGridRows; //the total number of cells will be the area of the grid
-        numBombs = numOfCells * (int)percentGridBombs;  //the bombs will be a percent of the total number of bombs
+        numBombs = numOfCells * percentGridBombs;  //the bombs will be a percent of the total number of bombs
         numSafes = numOfCells - numBombs;   //the number of safe cells will be the total amount of cells minus the number of bombs
-
         for(int i = 0; i < numOfCells; i++) //fill array with generic cells
         {
             CustomCell tempCell = new CustomCell();
@@ -134,7 +141,7 @@ public class Controller
            for(int j = 0; j < numGridCols; j++)
            {
                grid.get(i).add(cellArray.get(cellArrayCounter));    //from the array stored in grid.get(i), store a cell
-               //set the cell handler
+               assignCellHandler(cellArray.get(cellArrayCounter), i, j);
                GridPane.setRowIndex(grid.get(i).get(j), i);
                GridPane.setColumnIndex(grid.get(i).get(j), j);
                gamePane.getChildren().add(grid.get(i).get(j));
@@ -145,42 +152,39 @@ public class Controller
 
     private void assignCellHandler(CustomCell passCell, int i, int j)
     {
-        passCell.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if(isGameActive.getValue())
-                {
-                    if(event.isPrimaryButtonDown())
-                    {
-                        if(!passCell.getStyleClass().contains("flagged") || !passCell.getStyleClass().contains("question"))
-                        {
-                            if(passCell.getIsBomb())
+       passCell.setOnMousePressed(new EventHandler<MouseEvent>() {
+           @Override
+           public void handle(MouseEvent event) {
+               //if(isGameActive.getValue())
+               //{
+                   if(!passCell.getIsOpen())    //if the cell is currently closed
+                   {
+                       if(event.isPrimaryButtonDown())  //if the left button is clicked
+                       {
+                            if(!passCell.uncoverCellCheckSafe())  //will uncover the cell no matter what but will return false if there's a bomb
                             {
-                                //open the bombs
-                                //the game is over
+                                //open the cell
+                                isGameActive.setValue(false);
+                                hasLost = true; //if a bomb went off, you've lost
+                                System.out.println("laksjdflakjdsf");
                             }
-                            else
-                            {
-                                if(wasFirstCellSelected)
-                                {
-                                    //start the timer
-                                    wasFirstCellSelected = false;
-                                }
-                                if(!passCell.getIsOpen())
-                                {
-                                    //play the cell opening sound
-                                }
-                                //open the cell at i, j openCells(x,y)
-                            }
-                        }
-                    }
-                    if(event.isSecondaryButtonDown() && !passCell.getIsOpen())
-                    {
-                        passCell.changeFlagStatus();
-                    }
-                }
-            }
-        });
+                       }
+                       if(event.isSecondaryButtonDown() && !passCell.getIsOpen())    //if the right button is clicked AND the cell is closed
+                       {
+                           passCell.changeFlagStatus();    //since nothing has been open here and the second right button has been pressed
+                           if(passCell.getStyle().contains("flag")) //if the new FlagStatus is a flag, the numBomb must go down
+                           {
+                               decrementNumBomb();
+                           }
+                           if(passCell.getStyle().contains("blank"))    //if the new FlagStatus is blank, increase the number of bombs
+                           {
+                               incrementNumBomb();
+                           }
+                       }
+                   }
+               //}
+           }
+       });
     }
 
     //---------------------------------------------------------------//

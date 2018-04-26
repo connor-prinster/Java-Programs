@@ -55,6 +55,22 @@ public class CustomCell extends Button
         setAlignment(Pos.CENTER);
     }
 
+    public boolean uncoverCellCheckSafe()
+    {
+        isOpen = true;
+        getStyleClass().clear();
+        if(isBomb)
+        {
+            getStyleClass().add("openYesBomb");
+            return false;
+        }
+        else
+        {
+            getStyleClass().add("openNoBomb");
+            return true;
+        }
+    }
+
 
     //==========================================//
     //  Getter Functions for the Private Stuff  //
