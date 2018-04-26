@@ -16,10 +16,12 @@ public class Main extends Application
        BorderPane mainPane = loader.load();
        Controller ctrl = (Controller) loader.getController();
        mainPane.getStylesheets().add("/cs2410/assn8/resources/data.css");
-       //ctrl.initialize();
+
+       ctrl.initialize();
+
        primaryStage.setTitle("Minesweeper-ish");
        primaryStage.setOnCloseRequest(event -> {System.exit(0);});
-       primaryStage.setScene(new Scene(mainPane, 500, 500));
+       primaryStage.setScene(new Scene(mainPane));
        primaryStage.setResizable(false);
        primaryStage.show();
     }

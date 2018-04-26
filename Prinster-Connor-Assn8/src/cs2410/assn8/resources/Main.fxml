@@ -1,49 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs2410.assn8.controller.Controller">
-  <top>
-    <StackPane prefHeight="150.0" prefWidth="200.0">
-      <children>
-        <MenuBar fx:id="topMenuBar" StackPane.alignment="TOP_CENTER">
-          <menus>
-            <Menu fx:id="helpMenuOption" mnemonicParsing="false" text="Help">
-              <items>
-                <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" text="About" />
-              </items>
-            </Menu>
-          </menus>
-        </MenuBar>
-        <HBox fx:id="textButtonHbox" alignment="TOP_CENTER" maxHeight="-Infinity" prefHeight="50.0" prefWidth="500.0">
-          <children>
-            <Text fx:id="bombsLeftText" strokeType="OUTSIDE" strokeWidth="0.0" text="Bombs Left" textOrigin="BASELINE">
-              <HBox.margin>
-                <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
-              </HBox.margin>
-            </Text>
-            <Button fx:id="startButton" alignment="CENTER" mnemonicParsing="false" text="Start">
-              <HBox.margin>
-                <Insets bottom="5.0" left="50.0" right="50.0" top="5.0" fx:id="x1" />
-              </HBox.margin>
-            </Button>
-            <Text fx:id="timeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Time" HBox.margin="$x1" />
-          </children>
-        </HBox>
-      </children>
-    </StackPane>
-  </top>
+<BorderPane prefHeight="700.0" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="cs2410.assn8.controller.Controller">
   <center>
     <GridPane fx:id="gamePane" alignment="CENTER" BorderPane.alignment="CENTER">
       <columnConstraints>
@@ -54,4 +29,36 @@
       </rowConstraints>
     </GridPane>
   </center>
+  <padding>
+    <Insets fx:id="x1" />
+  </padding>
+  <top>
+    <StackPane alignment="TOP_CENTER" prefHeight="-1.0" prefWidth="-1.0" BorderPane.alignment="TOP_CENTER">
+      <children>
+        <MenuBar fx:id="topMenuBar" maxHeight="-1.0" minHeight="-1.0" prefHeight="-1.0" prefWidth="-1.0" StackPane.alignment="TOP_CENTER">
+          <menus>
+            <Menu mnemonicParsing="false" text="Help" fx:id="helpMenuOption">
+              <items>
+                <MenuItem mnemonicParsing="false" text="About" fx:id="aboutMenuItem" />
+              </items>
+            </Menu>
+          </menus>
+          <StackPane.margin>
+            <Insets fx:id="x1" />
+          </StackPane.margin>
+        </MenuBar>
+        <HBox fx:id="textButtonHbox" alignment="CENTER" maxHeight="100.0" minHeight="-1.0" padding="$x1" prefHeight="100.0" prefWidth="500.0" spacing="50.0" StackPane.alignment="BOTTOM_CENTER" StackPane.margin="$x1">
+          <children>
+            <Text fx:id="bombsLeftText" boundsType="VISUAL" strokeMiterLimit="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bombs Left" textOrigin="CENTER" x="0.0" y="0.0" HBox.hgrow="NEVER" HBox.margin="$x1" />
+            <Button fx:id="startButton" alignment="CENTER" contentDisplay="LEFT" maxHeight="-1.0" maxWidth="-1.0" minHeight="-1.0" minWidth="-1.0" mnemonicParsing="false" prefHeight="-1.0" prefWidth="-1.0" text="Start" underline="false" HBox.hgrow="SOMETIMES" HBox.margin="$x1">
+              <font>
+                <Font size="24.0" />
+              </font>
+            </Button>
+            <Text fx:id="timeText" boundsType="VISUAL" scaleX="1.0850718097184378" scaleY="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time" textOrigin="CENTER" x="0.0" y="0.0" HBox.hgrow="NEVER" HBox.margin="$x1" />
+          </children>
+        </HBox>
+      </children>
+    </StackPane>
+  </top>
 </BorderPane>

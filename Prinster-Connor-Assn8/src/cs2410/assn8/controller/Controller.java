@@ -27,16 +27,16 @@ public class Controller
     //===========================================//
 
     private ArrayList<ArrayList<CustomCell>> grid = new ArrayList<>(0);
-    private ArrayList<CustomCell> cellArray = new ArrayList<>(0);  //just a simple grid of Cells
-    private int numBombs;    //will be set based on values not yet known
-    private int numSafes;    //will be set based on numBombs
+    private ArrayList<CustomCell> cellArray = new ArrayList<>(0);  /**just a simple grid of Cells*/
+    private int numBombs;   /**will be set based on values not yet known*/
+    private int numSafes;    /**will be set based on numBombs*/
     private int numGridRows = 20;
     private int numGridCols = 20;
     private int numOfCells;
-    boolean hasWon = false;     //will end the game but will also display a win screen
-    boolean hasLost = false;    //---display a lose screen
+    boolean hasWon = false;     /**will end the game but will also display a win screen*/
+    boolean hasLost = false;    /**---display a lose screen*/
     private double percentGridBombs = .25;
-    private boolean wasFirstCellSelected = false;   //if the first cell is selected, game starts
+    private boolean wasFirstCellSelected = false;   /**if the first cell is selected, game starts*/
     private CustomCell c = new CustomCell();
     private BooleanProperty isGameActive = new SimpleBooleanProperty(true);
 
@@ -58,22 +58,22 @@ public class Controller
     //  MenuBar  //
     //-----------//
     @FXML
-    private MenuBar topMenuBar; //menubar containing helpMenuOption and aboutMenuItem
+    private MenuBar topMenuBar; /**menuBar containing helpMenuOption and aboutMenuItem*/
     @FXML
-    private Menu helpMenuOption;    //a menu reading "help"
+    private Menu helpMenuOption;    /**a menu reading "help"*/
     @FXML
-    private MenuItem aboutMenuItem; //will generate a popup window that will give instructions on how to play
+    private MenuItem aboutMenuItem; /**will generate a popup window that will give instructions on how to play*/
     //--------//
     //  Hbox  //
     //--------//
     @FXML
-    private HBox textButtonHbox;    //contains bombsLeftText, startButton, and timeText
+    private HBox textButtonHbox;    /**contains bombsLeftText, startButton, and timeText*/
     @FXML
-    private Text bombsLeftText; //will be continually updated to say how many bombs are left on the board
+    private Text bombsLeftText; /**will be continually updated to say how many bombs are left on the board*/
     @FXML
-    private Button startButton; //will set a boolean for either started or not
+    private Button startButton; /**will set a boolean for either started or not*/
     @FXML
-    private Text timeText;  //will continually update to keep a valid time going
+    private Text timeText;  /**will continually update to keep a valid time going*/
 
 
 
@@ -85,13 +85,22 @@ public class Controller
 
     public void initialize()
     {
-        initializeBombArray();  //set all the bombs
+        initializeGamePane();
+        initializeCellArray();  //set all the bombs
         fillGridPane();
         System.out.println("ballsack");
     }
 
+    private void initializeGamePane()
+    {
+        gamePane.getRowConstraints().clear();
+        gamePane.getColumnConstraints().clear();
+        grid.clear();
+        wasFirstCellSelected = true;
+    }
+
     /** set up the array with bombs as well as shuffling it */
-    private void initializeBombArray()
+    private void initializeCellArray()
     {
         cellArray.clear();
         numOfCells = numGridCols * numGridRows; //the total number of cells will be the area of the grid
@@ -100,7 +109,12 @@ public class Controller
 
         for(int i = 0; i < numOfCells; i++) //fill array with generic cells
         {
-            cellArray.add(new CustomCell());
+            CustomCell tempCell = new CustomCell();
+            tempCell.setMinWidth(30);
+            tempCell.setMinHeight(30);
+            tempCell.setPrefHeight(30);
+            tempCell.setPrefWidth(30);
+            cellArray.add(tempCell);
         }
         for(int i = 0; i < numBombs; i++)   //assign numBombs cells to bombs
         {
