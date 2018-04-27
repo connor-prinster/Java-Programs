@@ -502,7 +502,6 @@ public class Controller
                 uncoveredCells++;
                 if(numSafeCells == uncoveredCells)
                 {
-                    System.out.println("made it");
                     hasWon = true;
                     gameOver.setValue(true);
                 }
