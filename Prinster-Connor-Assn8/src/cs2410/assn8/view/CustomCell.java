@@ -58,22 +58,32 @@ public class CustomCell extends Button
     public void uncoverIndividualCell()
     {
         isOpen = true;
-        if (getStyleClass().contains("completelyUnmarkedBombCell")) {
+        if (getStyleClass().contains("completelyUnmarkedBombCell"))
+        {
             getStyleClass().clear();
             getStyleClass().add("completelyUnmarkedBombCell");
-        } else if (getStyleClass().contains("successfullyMarkedBombCell")) {
+        }
+        else if (getStyleClass().contains("successfullyMarkedBombCell"))
+        {
             getStyleClass().clear();
             getStyleClass().add("successfullyMarkedBombCell");
-        } else if (getStyleClass().contains("unsuccessfullyMarkedBombCell")) {
+        }
+        else if (getStyleClass().contains("unsuccessfullyMarkedBombCell"))
+        {
             getStyleClass().clear();
             getStyleClass().add("unsuccessfullyMarkedBombCell");
-        } else {
+        }
+        else
+            {
             getStyleClass().clear();
         }
         getStyleClass().add("openNoBomb");
-        if (isBomb) {
+        if (isBomb)
+        {
             getStyleClass().add("openYesBomb");
-        } else if (numNeighborBombs > 0) {
+        }
+        else if (numNeighborBombs > 0)
+        {
             setText(Integer.toString(numNeighborBombs));
         }
     }

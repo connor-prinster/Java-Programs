@@ -7,6 +7,42 @@
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
 }
+.openNoBomb /*just a normal cell*/
+{
+    -fx-background-color: lightgray;
+    -fx-border-color: darkgrey;
+    -fx-border-width: 1px;
+}
+
+.successfullyMarkedBombCell /*if a marked cell has a bomb in it have bomb icon with green background*/
+{
+    -fx-background-color: green;
+    -fx-border-color: darkgrey;
+    -fx-background-image: url("bomb.png");
+    -fx-background-size: 20 20;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.unsuccessfullyMarkedBombCell   /*if a marked cell doesn't have a bomb in it turn yellow with a flag image*/
+{
+    -fx-background-color: #fff193;
+    -fx-border-color: darkgrey;
+    -fx-background-image: url("flag.png");
+    -fx-background-size: 20 20;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.completelyUnmarkedBombCell /*if a bomb cell wasn't marked at all show bomb and red background*/
+{
+    -fx-background-color: #ff8e8f;
+    -fx-border-color: darkgrey;
+    -fx-background-image: url("bomb.png");
+    -fx-background-size: 20 20;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
 
 .question /*a user can put a question on the cell just in case it is a bomb (second click)*/
 {
@@ -24,24 +60,6 @@
     -fx-background-position: center;
 }
 
-.openNoBomb /*just a normal cell*/
-{
-    -fx-background-color: lightgray;
-    -fx-border-color: darkgrey;
-    -fx-border-width: 1px;
-}
 
-.successfullyMarkedBombCell /*if a marked cell has a bomb in it*/
-{
-    -fx-background-color: green;
-}
 
-.unsuccessfullyMarkedBombCell   /*if a marked cell doesn't have a bomb in it*/
-{
-    -fx-background-color: yellow;
-}
 
-.completelyUnmarkedBombCell /*if a bomb cell wasn't marked at all*/
-{
-    -fx-background-color: red;
-}

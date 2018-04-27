@@ -1,16 +1,16 @@
 package cs2410.assn8.controller;
 
+import cs2410.assn8.view.Scoreboard;
 import cs2410.assn8.view.SoundPlayer;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -20,6 +20,7 @@ import cs2410.assn8.view.CustomCell;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Optional;
 
 public class Controller
 {
@@ -34,17 +35,18 @@ public class Controller
     private IntegerProperty numBombs = new SimpleIntegerProperty();   /**will be set based on values not yet known*/
     private double numSafeCells;    /**will be set based on numBombs*/
     private double uncoveredCells = 0;
-    private int numGridRows = 10;
-    private int numGridColumns = 10;
+    private int numGridRows = 20;
+    private int numGridColumns = 20;
     private int numOfCells;
     boolean hasWon = false;     /**will end the game but will also display a win screen*/
     private BooleanProperty gameOver = new SimpleBooleanProperty(false);    /**---display a lose screen*/
     private BooleanProperty isInitialized = new SimpleBooleanProperty(false);
-    private double percentGridBombs = .2;
+    private double percentGridBombs = .25;
     private boolean firstCellSelected = true;   /**if the first cell is selected, game starts*/
     private BooleanProperty isGameActive = new SimpleBooleanProperty(true);
 
     private SoundPlayer soundPlayer = new SoundPlayer();
+    private Scoreboard scoreboard = new Scoreboard();
 
 
     //===================================//
@@ -85,19 +87,24 @@ public class Controller
 
     public void initialize()
     {
+        soundPlayer.endAllSound();
         initializeGamePane();   //just do this before doing it again when making the startButton start things*/
         startButton.setOnAction(event -> {
             isGameActive.setValue(true);
             initializeGamePane();
         });
         timeText.setText("Time:\n 00:00");
-        bombsLeftText.setText("Bombs Left:\n" + Double.toString(numBombs.getValue()));
-        System.out.println("ballsack");
+        bombsLeftText.setText("Bombs Left:\n" + Integer.toString(numBombs.getValue()));
+        numBombs.addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                bombsLeftText.setText("Bombs Left:\n" + numBombs.get());
+            }
+        });
     }
 
     private void initializeGamePane()
     {
-
         gamePane.getRowConstraints().clear();       //just clear any excess data
         gamePane.getColumnConstraints().clear();    //---
         grid.clear();   //clear the array of cells
@@ -110,6 +117,9 @@ public class Controller
 
         initializeCellArray();
         fillGridPane();
+
+        gameOver.removeListener(gameOverListener);
+        gameOver.addListener(gameOverListener);
     }
 
     /** set up the array with bombs as well as shuffling it */
@@ -118,8 +128,11 @@ public class Controller
         gamePane.getChildren().clear();
         cellArray.clear();
         numOfCells = numGridColumns * numGridRows; //the total number of cells will be the area of the grid
+        //System.out.println("there are " + numOfCells + " total cells");
         numBombs.setValue(numOfCells * percentGridBombs);  //the bombs will be a percent of the total number of bombs
+        //System.out.println("There are " + numBombs.getValue() + " bombs");
         numSafeCells = numOfCells - numBombs.getValue();   //the number of safe cells will be the total amount of cells minus the number of bombs
+        //System.out.println("There are " + numSafeCells + " safe cells");
 
         for(int i = 0; i < numOfCells; i++) //fill array with generic cells
         {
@@ -184,21 +197,26 @@ public class Controller
                    {
                        if(!(passCell.getStyleClass().contains("flagged") || passCell.getStyleClass().contains("question")))
                        {
-
                            if (passCell.getIsBomb())  //will uncover the cell no matter what but will return false if there's a bomb
                            {
                                //open all the bombs
                                isGameActive.setValue(false);
-                               gameOver.setValue(true); //if a bomb went off, you've lost
-                               //System.out.println("bomb went off");
+
+                               passCell.getStyleClass().clear();
                                passCell.getStyleClass().add("openYesBomb");
-                               soundPlayer.gameOverPlayer();
+
+                               hasWon = false;
+                               gameOver.setValue(true); //if a bomb went off, you've lost
                            }
                            else
                            {
                                if(firstCellSelected)
                                {
                                    firstCellSelected = false;
+                               }
+                               if(!passCell.getIsOpen())
+                               {
+                                   soundPlayer.openTilePlayer();
                                }
                                openCellsRecursively(i, j);
                            }
@@ -207,6 +225,7 @@ public class Controller
                    if(event.isSecondaryButtonDown() && !passCell.getIsOpen())    //if the right button is clicked AND the cell is closed
                    {
                        passCell.changeFlagStatus();    //since nothing has been open here and the second right button has been pressed
+                       soundPlayer.setToggleFlagPlayer();
                        if(passCell.getStyle().contains("flag")) //if the new FlagStatus is a flag, the numBomb must go down
                        {
                            decrementNumBomb();
@@ -219,6 +238,71 @@ public class Controller
                }
            }
        });
+    }
+
+    private ChangeListener<Boolean> gameOverListener = new ChangeListener<Boolean>() {
+        @Override
+        public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
+        {
+            scoreboard.stopScoreboardTimer();   //gotta stop before starting
+            if(hasWon)
+            {
+                openAllBombs();
+                soundPlayer.winResultPlayer();
+                numBombs.setValue(0);
+                soundPlayer.winResultPlayer();
+                Alert gameOverWinAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                gameOverWinAlert.setTitle("Game Over");
+                gameOverWinAlert.setHeaderText("You've Won! Solve time: " + scoreboard.returnTime());
+                gameOverWinAlert.setContentText("Play Once More?");
+                Optional<ButtonType> againQuestion = gameOverWinAlert.showAndWait();
+                if(againQuestion.get() == ButtonType.OK)
+                {
+                    initialize();
+                    isGameActive.setValue(true);
+                }
+            }
+            else if(newValue)
+            {
+                openAllBombs();
+                soundPlayer.gameOverPlayer();
+                Alert gameOverLoseAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                gameOverLoseAlert.setTitle("Game Over");
+                gameOverLoseAlert.setHeaderText("You've Lost");
+                gameOverLoseAlert.setContentText("Play Once More?");
+                Optional<ButtonType> againQuestion = gameOverLoseAlert.showAndWait();
+                if(againQuestion.get() == ButtonType.OK)
+                {
+                    initialize();
+                    isGameActive.setValue(true);
+                }
+            }
+        }
+    };
+
+    private void openAllBombs()
+    {
+        for(int i = 0; i < numGridRows; i++)
+        {
+            for(int j = 0; j < numGridColumns; j++)
+            {
+                if(grid.get(i).get(j).getIsBomb() && !grid.get(i).get(j).getStyleClass().contains("flagged"))    //if not flagged and is a bomb
+                {
+                    grid.get(i).get(j).getStyleClass().clear();
+                    grid.get(i).get(j).getStyleClass().add("completelyUnmarkedBombCell");
+                }
+                else if(grid.get(i).get(j).getIsBomb() && grid.get(i).get(j).getStyleClass().contains("flagged"))    //if flagged AND is a bomb
+                {
+                    grid.get(i).get(j).getStyleClass().clear();
+                    grid.get(i).get(j).getStyleClass().add("successfullyMarkedBombCell");
+                }
+                else if(!grid.get(i).get(j).getIsBomb() && grid.get(i).get(j).getStyleClass().contains("flagged"))   //if flagged but not a bomb
+                {
+                    grid.get(i).get(j).getStyleClass().clear();
+                    grid.get(i).get(j).getStyleClass().add("unsuccessfullyMarkedBombCell");
+                }
+            }
+        }
     }
 
     private int countNeighbors(int i, int j)
@@ -367,6 +451,7 @@ public class Controller
     {
         if(!firstCellSelected)
         {
+
             if(x >= numGridRows || x < 0 || y >= numGridColumns || y < 0)    //if it's out of bounds
             {
                 return;
@@ -379,14 +464,16 @@ public class Controller
             {
                 return;
             }
+
             if(!grid.get(x).get(y).getIsOpen()) //if this isn't a bomb and the above situations don't apply
             {
                 grid.get(x).get(y).uncoverIndividualCell();
                 uncoveredCells++;
+                //System.out.println("There are " + uncoveredCells + " uncovered cells and " + numSafeCells + " safe cells");
                 if(numSafeCells == uncoveredCells)
                 {
+                    //System.out.println("I made it");
                     hasWon = true;
-                    gameOver.setValue(true);
                 }
                 if(grid.get(x).get(y).getNeighborCount() == 0)  //all cells that don't have a number in them will be uncovered
                 {
@@ -413,5 +500,14 @@ public class Controller
     private void incrementNumBomb()
     {
         numBombs.setValue(numBombs.getValue() + 1);
+    }
+
+    public int returnGridRows()
+    {
+        return numGridRows;
+    }
+    public int returnGridCols()
+    {
+        return numGridColumns;
     }
 }
