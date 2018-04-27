@@ -190,8 +190,9 @@ public class Controller
                                //open all the bombs
                                isGameActive.setValue(false);
                                gameOver.setValue(true); //if a bomb went off, you've lost
-                               System.out.println("bomb went off");
+                               //System.out.println("bomb went off");
                                passCell.getStyleClass().add("openYesBomb");
+                               soundPlayer.gameOverPlayer();
                            }
                            else
                            {

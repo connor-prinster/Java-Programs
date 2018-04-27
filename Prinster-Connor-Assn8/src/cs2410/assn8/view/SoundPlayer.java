@@ -7,20 +7,22 @@ import java.io.File;
 
 public class SoundPlayer
 {
+    public SoundPlayer() {System.out.println("I have been called");}
+
     private MediaPlayer player;
 
-    private MediaPlayer endGameBomb = new MediaPlayer(new Media(new File("/cs2410/assn8/resources/endGameTheme.mp3").toURI().toString()));
-    private MediaPlayer endGameMusic = new MediaPlayer(new Media(new File("/cs2410/assn8/resources/bomb.mp3").toURI().toString()));
+    private MediaPlayer bombPlayer = new MediaPlayer(new Media(new File("data/bomb.mp3").toURI().toString()));
+    private MediaPlayer losePlayerTheme = new MediaPlayer(new Media(new File("data/endGameTheme.mp3").toURI().toString()));
 
-    private void gameOverPlayer()
+    public void gameOverPlayer()
     {
-        player.stop();
-        player = endGameBomb;
+        //player.stop();
+        player = bombPlayer;
         player.play();
         player.setOnEndOfMedia(new Runnable() {
             @Override
             public void run() {
-                player = endGameMusic;
+                player = losePlayerTheme;
                 player.setVolume(.5);
                 player.play();
             }
