@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"cs2410.assn8.controller","l":"Controller"},{"p":"cs2410.assn8.view","l":"CustomCell"},{"p":"cs2410.assn8.view","l":"Main"},{"p":"cs2410.assn8.view","l":"Scoreboard"},{"p":"cs2410.assn8.view","l":"SoundPlayer"}]
