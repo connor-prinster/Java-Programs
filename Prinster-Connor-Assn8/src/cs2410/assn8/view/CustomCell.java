@@ -102,11 +102,6 @@ public class CustomCell extends Button
         return isBomb;
     }
 
-    public int getFlaggedState()
-    {
-        return flaggedState;
-    }
-
     public int getNeighborCount()
     {
         return numNeighborBombs;
@@ -115,11 +110,6 @@ public class CustomCell extends Button
     //==========================================//
     //  Setter Functions for the Private Stuff  //
     //==========================================//
-    public void setIsOpen(boolean whatToSetTo)
-    {
-        isOpen = whatToSetTo;
-    }
-
     public void setIsBomb(boolean whatToSetTo)
     {
         isBomb = whatToSetTo;
@@ -129,6 +119,4 @@ public class CustomCell extends Button
     {
         numNeighborBombs = sum;
     }
-
-
 }

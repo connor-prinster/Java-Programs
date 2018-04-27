@@ -10,8 +10,10 @@ import java.util.TimerTask;
 public class Scoreboard
 {
     private Timer timer = new Timer();
+
     private LongProperty time = new SimpleLongProperty(0);
-    private TimerTask countTheSeconds = new TimerTask() {
+
+    private TimerTask countSeconds = new TimerTask() {
         @Override
         public void run() {
             Platform.runLater(new Runnable() {
@@ -26,12 +28,13 @@ public class Scoreboard
     public void startScoreboardTimer()
     {
         time.setValue(0);
-        timer.scheduleAtFixedRate(countTheSeconds, 1000, 1000);
+        timer.purge();
+        timer.scheduleAtFixedRate(countSeconds, 1000, 1000);
     }
 
     public void stopScoreboardTimer()
     {
-        countTheSeconds.cancel();
+        countSeconds.cancel();
         timer.purge();
     }
 
@@ -40,4 +43,11 @@ public class Scoreboard
         return time;
     }
 
+    public String formatTimeString()
+    {
+        int hrs = (int) (time.getValue()/3600);
+        int min = (int) ((time.getValue()/60) % 60);
+        int sec = (int) (time.getValue() % 60);
+        return String.format("%02d:%02d:%02d", hrs, min, sec);
+    }
 }

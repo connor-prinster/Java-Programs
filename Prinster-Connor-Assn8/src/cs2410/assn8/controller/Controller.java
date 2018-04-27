@@ -35,13 +35,13 @@ public class Controller
     private IntegerProperty numBombs = new SimpleIntegerProperty();   /**will be set based on values not yet known*/
     private double numSafeCells;    /**will be set based on numBombs*/
     private double uncoveredCells = 0;
-    private int numGridRows = 20;
-    private int numGridColumns = 20;
+    private int numGridRows = 10;
+    private int numGridColumns = 10;
     private int numOfCells;
     boolean hasWon = false;     /**will end the game but will also display a win screen*/
     private BooleanProperty gameOver = new SimpleBooleanProperty(false);    /**---display a lose screen*/
     private BooleanProperty isInitialized = new SimpleBooleanProperty(false);
-    private double percentGridBombs = .25;
+    private double percentGridBombs = .1;
     private boolean firstCellSelected = true;   /**if the first cell is selected, game starts*/
     private BooleanProperty isGameActive = new SimpleBooleanProperty(true);
 
@@ -93,7 +93,7 @@ public class Controller
             isGameActive.setValue(true);
             initializeGamePane();
         });
-        timeText.setText("Time:\n 00:00");
+        timeText.setText("Time:\n 00:00:00");
         bombsLeftText.setText("Bombs Left:\n" + Integer.toString(numBombs.getValue()));
         numBombs.addListener(new ChangeListener<Number>() {
             @Override
@@ -105,6 +105,7 @@ public class Controller
 
     private void initializeGamePane()
     {
+        scoreboard.stopScoreboardTimer();
         gamePane.getRowConstraints().clear();       //just clear any excess data
         gamePane.getColumnConstraints().clear();    //---
         grid.clear();   //clear the array of cells
@@ -114,9 +115,21 @@ public class Controller
         gameOver.setValue(false);
         isGameActive.setValue(true);
         uncoveredCells = 0;
-
         initializeCellArray();
         fillGridPane();
+        scoreboard = new Scoreboard();  //just to erase anything else for later on
+        scoreboard.returnTime().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                timeText.setText("Time:\n" + scoreboard.formatTimeString());
+            }
+        });
+        numBombs.addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                bombsLeftText.setText("Bombs Left\n" + numBombs.get());
+            }
+        });
 
         gameOver.removeListener(gameOverListener);
         gameOver.addListener(gameOverListener);
@@ -128,11 +141,8 @@ public class Controller
         gamePane.getChildren().clear();
         cellArray.clear();
         numOfCells = numGridColumns * numGridRows; //the total number of cells will be the area of the grid
-        //System.out.println("there are " + numOfCells + " total cells");
         numBombs.setValue(numOfCells * percentGridBombs);  //the bombs will be a percent of the total number of bombs
-        //System.out.println("There are " + numBombs.getValue() + " bombs");
         numSafeCells = numOfCells - numBombs.getValue();   //the number of safe cells will be the total amount of cells minus the number of bombs
-        //System.out.println("There are " + numSafeCells + " safe cells");
 
         for(int i = 0; i < numOfCells; i++) //fill array with generic cells
         {
@@ -145,7 +155,6 @@ public class Controller
         }
         for(int i = 0; i < numBombs.getValue(); i++)   //assign numBombs cells to bombs
         {
-            cellArray.get(i);
             cellArray.get(i).setIsBomb(true);
         }
 
@@ -199,7 +208,6 @@ public class Controller
                        {
                            if (passCell.getIsBomb())  //will uncover the cell no matter what but will return false if there's a bomb
                            {
-                               //open all the bombs
                                isGameActive.setValue(false);
 
                                passCell.getStyleClass().clear();
@@ -212,6 +220,7 @@ public class Controller
                            {
                                if(firstCellSelected)
                                {
+                                   scoreboard.startScoreboardTimer();
                                    firstCellSelected = false;
                                }
                                if(!passCell.getIsOpen())
@@ -226,13 +235,13 @@ public class Controller
                    {
                        passCell.changeFlagStatus();    //since nothing has been open here and the second right button has been pressed
                        soundPlayer.setToggleFlagPlayer();
-                       if(passCell.getStyle().contains("flag")) //if the new FlagStatus is a flag, the numBomb must go down
+                       if(passCell.getStyleClass().contains("flagged"))
                        {
-                           decrementNumBomb();
+                           numBombs.setValue(numBombs.getValue() - 1);
                        }
-                       if(passCell.getStyle().contains("blank"))    //if the new FlagStatus is blank, increase the number of bombs
+                       if(passCell.getStyleClass().contains("blank"))
                        {
-                           incrementNumBomb();
+                           numBombs.setValue(numBombs.getValue() + 1);
                        }
                    }
                }
@@ -469,10 +478,8 @@ public class Controller
             {
                 grid.get(x).get(y).uncoverIndividualCell();
                 uncoveredCells++;
-                //System.out.println("There are " + uncoveredCells + " uncovered cells and " + numSafeCells + " safe cells");
                 if(numSafeCells == uncoveredCells)
                 {
-                    //System.out.println("I made it");
                     hasWon = true;
                 }
                 if(grid.get(x).get(y).getNeighborCount() == 0)  //all cells that don't have a number in them will be uncovered
@@ -488,18 +495,6 @@ public class Controller
                 }
             }
         }
-    }
-
-    //---------------------------------------------------------------//
-    //  Makes it Easier to Track Where numBombs is getting adjusted  //
-    //---------------------------------------------------------------//
-    private void decrementNumBomb()
-    {
-        numBombs.setValue(numBombs.getValue() - 1);
-    }
-    private void incrementNumBomb()
-    {
-        numBombs.setValue(numBombs.getValue() + 1);
     }
 
     public int returnGridRows()

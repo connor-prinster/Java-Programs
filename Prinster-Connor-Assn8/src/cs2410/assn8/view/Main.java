@@ -19,7 +19,7 @@ public class Main extends Application
         Alert openAlert = new Alert(Alert.AlertType.INFORMATION);
         openAlert.setTitle("Instructions");
         openAlert.setHeaderText("Instructions");
-        openAlert.setContentText("Clear all the cells\n" + "Don't touch the bombs\n" + "Right click to place a flag; again to place question\n" + "Hit the 'START' button to begin");
+        openAlert.setContentText("Clear all the cells\n" + "Don't touch the bombs\n" + "Right click once to place a flag, twice to place question\n" + "Hit the 'START' button to begin");
 
        Controller ctrl = (Controller) loader.getController();
        mainPane.getStylesheets().add("/cs2410/assn8/resources/data.css");
