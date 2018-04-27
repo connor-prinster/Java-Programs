@@ -7,7 +7,7 @@ import java.io.File;
 
 public class SoundPlayer
 {
-    public SoundPlayer() {System.out.println("I have been called");}
+    public SoundPlayer() {}
 
     private MediaPlayer player;
 
@@ -70,5 +70,6 @@ public class SoundPlayer
             player.stop();
         }
         player = winPlayer;
+        player.play();
     }
 }

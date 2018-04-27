@@ -30,12 +30,12 @@
     </GridPane>
   </center>
   <padding>
-    <Insets fx:id="x1" />
+    <Insets fx:id="x4" />
   </padding>
   <top>
-    <StackPane alignment="TOP_CENTER" prefHeight="-1.0" prefWidth="-1.0" BorderPane.alignment="TOP_CENTER">
+    <StackPane prefHeight="120.0" prefWidth="200.0" BorderPane.alignment="CENTER">
       <children>
-        <MenuBar fx:id="topMenuBar" maxHeight="-1.0" minHeight="-1.0" prefHeight="-1.0" prefWidth="-1.0" StackPane.alignment="TOP_CENTER">
+        <MenuBar fx:id="topMenuBar" StackPane.alignment="TOP_LEFT">
           <menus>
             <Menu mnemonicParsing="false" text="Help" fx:id="helpMenuOption">
               <items>
@@ -47,14 +47,10 @@
             <Insets fx:id="x1" />
           </StackPane.margin>
         </MenuBar>
-        <HBox fx:id="textButtonHbox" alignment="CENTER" maxHeight="100.0" minHeight="-1.0" padding="$x1" prefHeight="100.0" prefWidth="500.0" spacing="50.0" StackPane.alignment="BOTTOM_CENTER" StackPane.margin="$x1">
+        <HBox fx:id="textButtonHbox" alignment="CENTER" fillHeight="false" maxHeight="100.0" prefHeight="100.0" prefWidth="500.0" spacing="50.0" StackPane.alignment="BOTTOM_CENTER">
           <children>
             <Text fx:id="bombsLeftText" boundsType="VISUAL" strokeMiterLimit="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bombs Left" textOrigin="CENTER" x="0.0" y="0.0" HBox.hgrow="NEVER" HBox.margin="$x1" />
-            <Button fx:id="startButton" alignment="CENTER" contentDisplay="LEFT" maxHeight="-1.0" maxWidth="-1.0" minHeight="-1.0" minWidth="-1.0" mnemonicParsing="false" prefHeight="-1.0" prefWidth="-1.0" text="Start" underline="false" HBox.hgrow="SOMETIMES" HBox.margin="$x1">
-              <font>
-                <Font size="24.0" />
-              </font>
-            </Button>
+            <Button fx:id="startButton" mnemonicParsing="false" text="Start" />
             <Text fx:id="timeText" boundsType="VISUAL" scaleX="1.0850718097184378" scaleY="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time" textOrigin="CENTER" x="0.0" y="0.0" HBox.hgrow="NEVER" HBox.margin="$x1" />
           </children>
         </HBox>

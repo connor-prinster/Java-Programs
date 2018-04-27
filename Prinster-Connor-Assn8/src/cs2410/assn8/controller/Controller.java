@@ -35,13 +35,13 @@ public class Controller
     private IntegerProperty numBombs = new SimpleIntegerProperty();   /**will be set based on values not yet known*/
     private double numSafeCells;    /**will be set based on numBombs*/
     private double uncoveredCells = 0;
-    private int numGridRows = 10;
-    private int numGridColumns = 10;
+    private int numGridRows = 20;
+    private int numGridColumns = 20;
     private int numOfCells;
     boolean hasWon = false;     /**will end the game but will also display a win screen*/
     private BooleanProperty gameOver = new SimpleBooleanProperty(false);    /**---display a lose screen*/
     private BooleanProperty isInitialized = new SimpleBooleanProperty(false);
-    private double percentGridBombs = .1;
+    private double percentGridBombs = .25;
     private boolean firstCellSelected = true;   /**if the first cell is selected, game starts*/
     private BooleanProperty isGameActive = new SimpleBooleanProperty(true);
 
@@ -90,6 +90,7 @@ public class Controller
         soundPlayer.endAllSound();
         initializeGamePane();   //just do this before doing it again when making the startButton start things*/
         startButton.setOnAction(event -> {
+            soundPlayer.endAllSound();
             isGameActive.setValue(true);
             initializeGamePane();
         });
@@ -111,7 +112,7 @@ public class Controller
         grid.clear();   //clear the array of cells
         firstCellSelected = true;
         hasWon = false; //has not won
-        timeText.setText("Time:\n00:00");
+        timeText.setText("Time:\n00:00:00");
         gameOver.setValue(false);
         isGameActive.setValue(true);
         uncoveredCells = 0;
@@ -256,13 +257,13 @@ public class Controller
             scoreboard.stopScoreboardTimer();   //gotta stop before starting
             if(hasWon)
             {
-                openAllBombs();
+                openAllBombsWin();
                 soundPlayer.winResultPlayer();
                 numBombs.setValue(0);
                 soundPlayer.winResultPlayer();
                 Alert gameOverWinAlert = new Alert(Alert.AlertType.CONFIRMATION);
                 gameOverWinAlert.setTitle("Game Over");
-                gameOverWinAlert.setHeaderText("You've Won! Solve time: " + scoreboard.returnTime());
+                gameOverWinAlert.setHeaderText("You've Won! Solve time: " + scoreboard.formatTimeString());
                 gameOverWinAlert.setContentText("Play Once More?");
                 Optional<ButtonType> againQuestion = gameOverWinAlert.showAndWait();
                 if(againQuestion.get() == ButtonType.OK)
@@ -288,6 +289,21 @@ public class Controller
             }
         }
     };
+
+    private void openAllBombsWin()
+    {
+        for(int i = 0; i < numGridRows; i++)
+        {
+            for(int j = 0; j < numGridColumns; j++)
+            {
+                if(grid.get(i).get(j).getIsBomb())
+                {
+                    grid.get(i).get(j).getStyleClass().clear();
+                    grid.get(i).get(j).getStyleClass().add("successfullyMarkedBombCell");
+                }
+            }
+        }
+    }
 
     private void openAllBombs()
     {
@@ -480,7 +496,9 @@ public class Controller
                 uncoveredCells++;
                 if(numSafeCells == uncoveredCells)
                 {
+                    System.out.println("made it");
                     hasWon = true;
+                    gameOver.setValue(true);
                 }
                 if(grid.get(x).get(y).getNeighborCount() == 0)  //all cells that don't have a number in them will be uncovered
                 {
