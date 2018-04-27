@@ -31,7 +31,7 @@ public class Controller
     private double numBombs;   /**will be set based on values not yet known*/
     private double numSafes;    /**will be set based on numBombs*/
     private int numGridRows = 10;
-    private int numGridCols = 10;
+    private int numGridColumns = 10;
     private int numOfCells;
     boolean hasWon = false;     /**will end the game but will also display a win screen*/
     boolean hasLost = false;    /**---display a lose screen*/
@@ -111,7 +111,7 @@ public class Controller
     private void initializeCellArray()
     {
         cellArray.clear();
-        numOfCells = numGridCols * numGridRows; //the total number of cells will be the area of the grid
+        numOfCells = numGridColumns * numGridRows; //the total number of cells will be the area of the grid
         numBombs = numOfCells * percentGridBombs;  //the bombs will be a percent of the total number of bombs
         numSafes = numOfCells - numBombs;   //the number of safe cells will be the total amount of cells minus the number of bombs
         for(int i = 0; i < numOfCells; i++) //fill array with generic cells
@@ -138,7 +138,7 @@ public class Controller
         for(int i = 0; i < numGridRows; i++)
         {
            grid.add(new ArrayList<>());
-           for(int j = 0; j < numGridCols; j++)
+           for(int j = 0; j < numGridColumns; j++)
            {
                grid.get(i).add(cellArray.get(cellArrayCounter));    //from the array stored in grid.get(i), store a cell
                assignCellHandler(cellArray.get(cellArrayCounter), i, j);
@@ -149,14 +149,18 @@ public class Controller
            }
         }
     }
-
+    /**Check how many of the neighboring cells are bombs, increment for each.
+     * i is comparable to x
+     * and
+     * j is comparable to y in a coordinate plane
+     * */
     private void assignCellHandler(CustomCell passCell, int i, int j)
     {
        passCell.setOnMousePressed(new EventHandler<MouseEvent>() {
            @Override
            public void handle(MouseEvent event) {
-               //if(isGameActive.getValue())
-               //{
+               if(isGameActive.getValue())
+               {
                    if(!passCell.getIsOpen())    //if the cell is currently closed
                    {
                        if(event.isPrimaryButtonDown())  //if the left button is clicked
@@ -166,7 +170,7 @@ public class Controller
                                 //open the cell
                                 isGameActive.setValue(false);
                                 hasLost = true; //if a bomb went off, you've lost
-                                System.out.println("laksjdflakjdsf");
+                                System.out.println("bomb went off");
                             }
                        }
                        if(event.isSecondaryButtonDown() && !passCell.getIsOpen())    //if the right button is clicked AND the cell is closed
@@ -182,9 +186,151 @@ public class Controller
                            }
                        }
                    }
-               //}
+               }
            }
        });
+    }
+
+    public void countNeighbors(int i, int j)
+    {
+        int sum = 0;
+        if (i > 0 && i < numGridRows - 1) {
+            if (j > 0 && j < numGridColumns - 1) {
+                if (grid.get(i - 1).get(j - 1).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i).get(j - 1).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i + 1).get(j - 1).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i - 1).get(j).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i + 1).get(j).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i - 1).get(j + 1).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i).get(j + 1).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i + 1).get(j + 1).getIsBomb()) {
+                    sum++;
+                }
+            } else if (j == 0) {
+                if (grid.get(i - 1).get(j).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i + 1).get(j).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i - 1).get(j + 1).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i).get(j + 1).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i + 1).get(j + 1).getIsBomb()) {
+                    sum++;
+                }
+            } else {
+                if (grid.get(i - 1).get(j - 1).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i).get(j - 1).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i + 1).get(j - 1).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i - 1).get(j).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i + 1).get(j).getIsBomb()) {
+                    sum++;
+                }
+            }
+        } else if (i == 0) {
+            if (j > 0 && j < numGridColumns - 1) {
+                if (grid.get(i).get(j - 1).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i + 1).get(j - 1).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i + 1).get(j).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i).get(j + 1).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i + 1).get(j + 1).getIsBomb()) {
+                    sum++;
+                }
+            } else if (j == 0) {
+                if (grid.get(i + 1).get(j).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i).get(j + 1).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i + 1).get(j + 1).getIsBomb()) {
+                    sum++;
+                }
+            } else {
+                if (grid.get(i).get(j - 1).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i + 1).get(j - 1).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i + 1).get(j).getIsBomb()) {
+                    sum++;
+                }
+            }
+        } else {
+            if (j > 0 && j < numGridColumns - 1) {
+                if (grid.get(i - 1).get(j - 1).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i).get(j - 1).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i - 1).get(j).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i - 1).get(j + 1).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i).get(j + 1).getIsBomb()) {
+                    sum++;
+                }
+            } else if (j == 0) {
+                if (grid.get(i - 1).get(j).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i - 1).get(j + 1).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i).get(j + 1).getIsBomb()) {
+                    sum++;
+                }
+            } else {
+                if (grid.get(i - 1).get(j - 1).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i).get(j - 1).getIsBomb()) {
+                    sum++;
+                }
+                if (grid.get(i - 1).get(j).getIsBomb()) {
+                    sum++;
+                }
+            }
+        }
+        grid.get(i).get(j).setNumNeighborBombs(sum);
     }
 
     //---------------------------------------------------------------//

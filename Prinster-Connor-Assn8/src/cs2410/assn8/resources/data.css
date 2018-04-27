@@ -1,5 +1,7 @@
 .openYesBomb   /*if the cell is a bomb, when clicked it'll turn into this*/
 {
+    -fx-background-color: lightgrey;
+    -fx-border-color: darkgrey;
     -fx-background-image: url("bomb.png");
     -fx-background-size: 20 20;
     -fx-background-repeat: no-repeat;
@@ -25,7 +27,7 @@
 .openNoBomb /*just a normal cell*/
 {
     -fx-background-color: lightgrey;
-    -fx-border-color: Black;
+    -fx-border-color: darkgrey;
     -fx-border-width: 1px;
 }
 

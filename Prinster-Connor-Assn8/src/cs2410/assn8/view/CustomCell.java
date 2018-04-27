@@ -9,7 +9,7 @@ public class CustomCell extends Button
     private int flaggedState = 0;   //since there are different flagged states, this applies to a list of potential texts
     private boolean isOpen = false; //a simple bool to see if the cell is opened or not
     private int cellSize = 20;
-    private int numNeighbors = 0;   //initialize neibhors as 0;
+    private int numNeighborBombs = 0;   //initialize neibhors as 0;
 
     public CustomCell()
     {
@@ -101,6 +101,11 @@ public class CustomCell extends Button
     public void setIsBomb(boolean whatToSetTo)
     {
         isBomb = whatToSetTo;
+    }
+
+    public void setNumNeighborBombs(int sum)
+    {
+        numNeighborBombs = sum;
     }
 
 
