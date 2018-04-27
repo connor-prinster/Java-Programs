@@ -9,10 +9,11 @@ import java.util.TimerTask;
 
 public class Scoreboard
 {
-    private Timer timer = new Timer();
+    private Timer timer = new Timer();  /**timer for the whole program*/
 
-    private LongProperty time = new SimpleLongProperty(0);
+    private LongProperty time = new SimpleLongProperty(0);  /**will be used for formatting*/
 
+    /**counts the seconds and updates it continuously*/
     private TimerTask countSeconds = new TimerTask() {
         @Override
         public void run() {
@@ -25,6 +26,7 @@ public class Scoreboard
         }
     };
 
+    /**starts the timer*/
     public void startScoreboardTimer()
     {
         time.setValue(0);
@@ -32,17 +34,20 @@ public class Scoreboard
         timer.scheduleAtFixedRate(countSeconds, 1000, 1000);
     }
 
+    /**stops the timer*/
     public void stopScoreboardTimer()
     {
         countSeconds.cancel();
         timer.purge();
     }
 
+    /**getter for 'time'*/
     public LongProperty returnTime()
     {
         return time;
     }
 
+    /**returns a nice string for what will appear on the time: * on the top of the gameboard*/
     public String formatTimeString()
     {
         int hrs = (int) (time.getValue()/3600);

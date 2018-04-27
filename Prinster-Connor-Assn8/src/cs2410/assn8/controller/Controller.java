@@ -30,23 +30,23 @@ public class Controller
     //===========================================//
     //===========================================//
 
-    private ArrayList< ArrayList<CustomCell> > grid = new ArrayList<>(0);
+    private ArrayList< ArrayList<CustomCell> > grid = new ArrayList<>(0);   /**This is a 2 dimensional array of CustomCells. It makes up the gridPane*/
     private ArrayList<CustomCell> cellArray = new ArrayList<>(0);  /**just a simple grid of Cells*/
     private IntegerProperty numBombs = new SimpleIntegerProperty();   /**will be set based on values not yet known*/
     private double numSafeCells;    /**will be set based on numBombs*/
-    private double uncoveredCells = 0;
-    private int numGridRows = 20;
-    private int numGridColumns = 20;
-    private int numOfCells;
+    private double uncoveredCells = 0;  /**this is the number of cells uncovered (and safe)*/
+    private int numGridRows = 20;   /**number of rows*/
+    private int numGridColumns = 20;    /**number of columns*/
+    private int numOfCells; /**just easier to have this as a global variable for future updates and maintenance, this is the value of numGridRows * numGridColumns*/
     boolean hasWon = false;     /**will end the game but will also display a win screen*/
     private BooleanProperty gameOver = new SimpleBooleanProperty(false);    /**---display a lose screen*/
     private BooleanProperty isInitialized = new SimpleBooleanProperty(false);
-    private double percentGridBombs = .25;
+    private double percentGridBombs = .25;  /**The percentage of the CustomCells that will be bombs*/
     private boolean firstCellSelected = true;   /**if the first cell is selected, game starts*/
-    private BooleanProperty isGameActive = new SimpleBooleanProperty(true);
+    private BooleanProperty isGameActive = new SimpleBooleanProperty(true); /**will be connected to a listener to check if you've won or not*/
 
-    private SoundPlayer soundPlayer = new SoundPlayer();
-    private Scoreboard scoreboard = new Scoreboard();
+    private SoundPlayer soundPlayer = new SoundPlayer();    /**a generic SoundPlayer*/
+    private Scoreboard scoreboard = new Scoreboard();   /**a generic ScoreBoard*/
 
 
     //===================================//
@@ -58,7 +58,7 @@ public class Controller
     //  Center Objects  //
     //==================//
     @FXML
-    private GridPane gamePane;
+    private GridPane gamePane;  /**This holds the 2 dimensional array of buttons/cells */
     //===============//
     //  Top Objects  //
     //===============//
@@ -85,6 +85,7 @@ public class Controller
 
     public Controller() {} /**standard constructor with no special stuff, that's for later*/
 
+    /**Contains the initializers. Will be called whenever beginning the program*/
     public void initialize()
     {
         soundPlayer.endAllSound();
@@ -104,6 +105,7 @@ public class Controller
         });
     }
 
+    /**deals with the scoreBoard, gamePane, and grid. Also adds listeners*/
     private void initializeGamePane()
     {
         scoreboard.stopScoreboardTimer();
@@ -162,6 +164,7 @@ public class Controller
         Collections.shuffle(cellArray); //because the first numBombs cells have been assigned bombs, it must be shuffled so the top row isn't just a bunch of bombs
     }
 
+    /**fills the gridpane from the array*/
     private void fillGridPane()
     {
         int cellArrayCounter = 0;
@@ -250,6 +253,7 @@ public class Controller
        });
     }
 
+    /**Listener for win/lose result of the game*/
     private ChangeListener<Boolean> gameOverListener = new ChangeListener<Boolean>() {
         @Override
         public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
@@ -290,6 +294,7 @@ public class Controller
         }
     };
 
+    /**uncovers all the bombs (on win) and colors them green since the player has won*/
     private void openAllBombsWin()
     {
         for(int i = 0; i < numGridRows; i++)
@@ -304,7 +309,7 @@ public class Controller
             }
         }
     }
-
+    /**uncovers all bombs (on loss) and colors all cells the correct colors*/
     private void openAllBombs()
     {
         for(int i = 0; i < numGridRows; i++)
@@ -330,6 +335,7 @@ public class Controller
         }
     }
 
+    /**Counts how many bombs are nearby and sets the button's text to that number. Essentially a nasty if/else statement*/
     private int countNeighbors(int i, int j)
     {
         int sum = 0;
@@ -472,6 +478,7 @@ public class Controller
         return sum;
     }
 
+    /**Will open empty cells nearby*/
     private void openCellsRecursively(int x, int y)
     {
         if(!firstCellSelected)
@@ -515,10 +522,12 @@ public class Controller
         }
     }
 
+    /**Returns the numGridRows*/
     public int returnGridRows()
     {
         return numGridRows;
     }
+    /**Returns the numGridCols*/
     public int returnGridCols()
     {
         return numGridColumns;

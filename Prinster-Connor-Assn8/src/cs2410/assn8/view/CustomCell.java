@@ -11,6 +11,7 @@ public class CustomCell extends Button
     private int cellSize = 20;
     private int numNeighborBombs = 0;   //initialize neibhors as 0;
 
+    /**Constructor for the CustomCell*/
     public CustomCell()
     {
         isBomb = false;
@@ -22,6 +23,7 @@ public class CustomCell extends Button
    //--------------------------------------//
    //  Change Style Based on flaggedState  //
    //--------------------------------------//
+    /**changes the image on the cell*/
     public void changeFlagStatus()
     {
         flaggedState++; //increase flaggedState by one
@@ -44,6 +46,7 @@ public class CustomCell extends Button
         }
     }
 
+    /**initializes the cell with default values*/
     private void cellInitializer(int passSize)
     {
         setMinWidth(passSize);
@@ -55,6 +58,7 @@ public class CustomCell extends Button
         setAlignment(Pos.CENTER);
     }
 
+    /**uncovers an individual cell and colors it accordingly*/
     public void uncoverIndividualCell()
     {
         isOpen = true;
@@ -92,16 +96,19 @@ public class CustomCell extends Button
     //==========================================//
     //  Getter Functions for the Private Stuff  //
     //==========================================//
+    /**retrieves isOpen*/
     public boolean getIsOpen()
     {
         return isOpen;
     }
 
+    /**retrieves isBomb*/
     public boolean getIsBomb()
     {
         return isBomb;
     }
 
+    /**retrieves numNeighborBombs*/
     public int getNeighborCount()
     {
         return numNeighborBombs;
@@ -110,11 +117,13 @@ public class CustomCell extends Button
     //==========================================//
     //  Setter Functions for the Private Stuff  //
     //==========================================//
+    /**Setter for isBomb*/
     public void setIsBomb(boolean whatToSetTo)
     {
         isBomb = whatToSetTo;
     }
 
+    /**setter for numNeighborBombs*/
     public void setNumNeighborBombs(int sum)
     {
         numNeighborBombs = sum;
