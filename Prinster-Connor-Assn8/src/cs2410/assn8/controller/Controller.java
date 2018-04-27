@@ -1,7 +1,10 @@
 package cs2410.assn8.controller;
 
+import cs2410.assn8.view.SoundPlayer;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -26,19 +29,22 @@ public class Controller
     //===========================================//
     //===========================================//
 
-    private ArrayList<ArrayList<CustomCell>> grid = new ArrayList<>(0);
+    private ArrayList< ArrayList<CustomCell> > grid = new ArrayList<>(0);
     private ArrayList<CustomCell> cellArray = new ArrayList<>(0);  /**just a simple grid of Cells*/
-    private double numBombs;   /**will be set based on values not yet known*/
-    private double numSafes;    /**will be set based on numBombs*/
+    private IntegerProperty numBombs = new SimpleIntegerProperty();   /**will be set based on values not yet known*/
+    private double numSafeCells;    /**will be set based on numBombs*/
+    private double uncoveredCells = 0;
     private int numGridRows = 10;
     private int numGridColumns = 10;
     private int numOfCells;
     boolean hasWon = false;     /**will end the game but will also display a win screen*/
-    boolean hasLost = false;    /**---display a lose screen*/
-    private double percentGridBombs = .1;
-    private boolean wasFirstCellSelected = false;   /**if the first cell is selected, game starts*/
-    private CustomCell c = new CustomCell();
+    private BooleanProperty gameOver = new SimpleBooleanProperty(false);    /**---display a lose screen*/
+    private BooleanProperty isInitialized = new SimpleBooleanProperty(false);
+    private double percentGridBombs = .2;
+    private boolean firstCellSelected = true;   /**if the first cell is selected, game starts*/
     private BooleanProperty isGameActive = new SimpleBooleanProperty(true);
+
+    private SoundPlayer soundPlayer = new SoundPlayer();
 
 
     //===================================//
@@ -75,45 +81,46 @@ public class Controller
     @FXML
     private Text timeText;  /**will continually update to keep a valid time going*/
 
-
-
-    public Controller() /**standard constructor with no special stuff, that's for later*/
-    {
-    }
-
+    public Controller() {} /**standard constructor with no special stuff, that's for later*/
 
     public void initialize()
     {
-        initializeGamePane();   /**must do this before doing it again when making the startButton start things*/
+        initializeGamePane();   //just do this before doing it again when making the startButton start things*/
         startButton.setOnAction(event -> {
             isGameActive.setValue(true);
             initializeGamePane();
         });
+        timeText.setText("Time:\n 00:00");
+        bombsLeftText.setText("Bombs Left:\n" + Double.toString(numBombs.getValue()));
         System.out.println("ballsack");
     }
 
     private void initializeGamePane()
     {
+
         gamePane.getRowConstraints().clear();       //just clear any excess data
         gamePane.getColumnConstraints().clear();    //---
         grid.clear();   //clear the array of cells
-        wasFirstCellSelected = true;
+        firstCellSelected = true;
         hasWon = false; //has not won
-        hasLost = false;    //has not lost either
-        initializeCellArray();  //set all the bombs
-        timeText.setText("Time:\n 00:00");
-        System.out.println(numBombs);
-        bombsLeftText.setText("Bombs Left:\n" + Double.toString(numBombs));
+        timeText.setText("Time:\n00:00");
+        gameOver.setValue(false);
+        isGameActive.setValue(true);
+        uncoveredCells = 0;
+
+        initializeCellArray();
         fillGridPane();
     }
 
     /** set up the array with bombs as well as shuffling it */
     private void initializeCellArray()
     {
+        gamePane.getChildren().clear();
         cellArray.clear();
         numOfCells = numGridColumns * numGridRows; //the total number of cells will be the area of the grid
-        numBombs = numOfCells * percentGridBombs;  //the bombs will be a percent of the total number of bombs
-        numSafes = numOfCells - numBombs;   //the number of safe cells will be the total amount of cells minus the number of bombs
+        numBombs.setValue(numOfCells * percentGridBombs);  //the bombs will be a percent of the total number of bombs
+        numSafeCells = numOfCells - numBombs.getValue();   //the number of safe cells will be the total amount of cells minus the number of bombs
+
         for(int i = 0; i < numOfCells; i++) //fill array with generic cells
         {
             CustomCell tempCell = new CustomCell();
@@ -123,7 +130,7 @@ public class Controller
             tempCell.setPrefWidth(30);
             cellArray.add(tempCell);
         }
-        for(int i = 0; i < numBombs; i++)   //assign numBombs cells to bombs
+        for(int i = 0; i < numBombs.getValue(); i++)   //assign numBombs cells to bombs
         {
             cellArray.get(i);
             cellArray.get(i).setIsBomb(true);
@@ -141,14 +148,26 @@ public class Controller
            for(int j = 0; j < numGridColumns; j++)
            {
                grid.get(i).add(cellArray.get(cellArrayCounter));    //from the array stored in grid.get(i), store a cell
-               assignCellHandler(cellArray.get(cellArrayCounter), i, j);
+               assignCellHandler(grid.get(i).get(j), i, j);
                GridPane.setRowIndex(grid.get(i).get(j), i);
                GridPane.setColumnIndex(grid.get(i).get(j), j);
                gamePane.getChildren().add(grid.get(i).get(j));
                cellArrayCounter++;
            }
         }
+
+        for(int i = 0; i < numGridRows; i++)
+        {
+            for(int j = 0; j < numGridColumns; j++)
+            {
+                grid.get(i).get(j).setNumNeighborBombs(countNeighbors(i, j));
+            }
+        }
+
+        isInitialized.setValue(true);
     }
+
+
     /**Check how many of the neighboring cells are bombs, increment for each.
      * i is comparable to x
      * and
@@ -161,29 +180,39 @@ public class Controller
            public void handle(MouseEvent event) {
                if(isGameActive.getValue())
                {
-                   if(!passCell.getIsOpen())    //if the cell is currently closed
+                   if(event.isPrimaryButtonDown())  //if the left button is clicked
                    {
-                       if(event.isPrimaryButtonDown())  //if the left button is clicked
+                       if(!(passCell.getStyleClass().contains("flagged") || passCell.getStyleClass().contains("question")))
                        {
-                            if(!passCell.uncoverCellCheckSafe())  //will uncover the cell no matter what but will return false if there's a bomb
-                            {
-                                //open the cell
-                                isGameActive.setValue(false);
-                                hasLost = true; //if a bomb went off, you've lost
-                                System.out.println("bomb went off");
-                            }
+
+                           if (passCell.getIsBomb())  //will uncover the cell no matter what but will return false if there's a bomb
+                           {
+                               //open all the bombs
+                               isGameActive.setValue(false);
+                               gameOver.setValue(true); //if a bomb went off, you've lost
+                               System.out.println("bomb went off");
+                               passCell.getStyleClass().add("openYesBomb");
+                           }
+                           else
+                           {
+                               if(firstCellSelected)
+                               {
+                                   firstCellSelected = false;
+                               }
+                               openCellsRecursively(i, j);
+                           }
                        }
-                       if(event.isSecondaryButtonDown() && !passCell.getIsOpen())    //if the right button is clicked AND the cell is closed
+                   }
+                   if(event.isSecondaryButtonDown() && !passCell.getIsOpen())    //if the right button is clicked AND the cell is closed
+                   {
+                       passCell.changeFlagStatus();    //since nothing has been open here and the second right button has been pressed
+                       if(passCell.getStyle().contains("flag")) //if the new FlagStatus is a flag, the numBomb must go down
                        {
-                           passCell.changeFlagStatus();    //since nothing has been open here and the second right button has been pressed
-                           if(passCell.getStyle().contains("flag")) //if the new FlagStatus is a flag, the numBomb must go down
-                           {
-                               decrementNumBomb();
-                           }
-                           if(passCell.getStyle().contains("blank"))    //if the new FlagStatus is blank, increase the number of bombs
-                           {
-                               incrementNumBomb();
-                           }
+                           decrementNumBomb();
+                       }
+                       if(passCell.getStyle().contains("blank"))    //if the new FlagStatus is blank, increase the number of bombs
+                       {
+                           incrementNumBomb();
                        }
                    }
                }
@@ -191,7 +220,7 @@ public class Controller
        });
     }
 
-    public void countNeighbors(int i, int j)
+    private int countNeighbors(int i, int j)
     {
         int sum = 0;
         if (i > 0 && i < numGridRows - 1) {
@@ -330,7 +359,47 @@ public class Controller
                 }
             }
         }
-        grid.get(i).get(j).setNumNeighborBombs(sum);
+        return sum;
+    }
+
+    private void openCellsRecursively(int x, int y)
+    {
+        if(!firstCellSelected)
+        {
+            if(x >= numGridRows || x < 0 || y >= numGridColumns || y < 0)    //if it's out of bounds
+            {
+                return;
+            }
+            if(grid.get(x).get(y).getIsOpen())  //if the cell is already opened
+            {
+                return;
+            }
+            if(grid.get(x).get(y).getStyleClass().contains("flagged") || grid.get(x).get(y).getStyleClass().contains("question"))   //if there is a flag or question icon
+            {
+                return;
+            }
+            if(!grid.get(x).get(y).getIsOpen()) //if this isn't a bomb and the above situations don't apply
+            {
+                grid.get(x).get(y).uncoverIndividualCell();
+                uncoveredCells++;
+                if(numSafeCells == uncoveredCells)
+                {
+                    hasWon = true;
+                    gameOver.setValue(true);
+                }
+                if(grid.get(x).get(y).getNeighborCount() == 0)  //all cells that don't have a number in them will be uncovered
+                {
+                    openCellsRecursively(x + 1, y - 1); //top left
+                    openCellsRecursively(x + 1, y);   //top center
+                    openCellsRecursively(x + 1, y + 1); //top right
+                    openCellsRecursively(x, y - 1);   //left
+                    openCellsRecursively(x, y + 1);   //right
+                    openCellsRecursively(x - 1, y - 1); //bottom left
+                    openCellsRecursively(x - 1, y);   //bottom center
+                    openCellsRecursively(x - 1, y + 1); //bottom right
+                }
+            }
+        }
     }
 
     //---------------------------------------------------------------//
@@ -338,12 +407,10 @@ public class Controller
     //---------------------------------------------------------------//
     private void decrementNumBomb()
     {
-        numBombs--;
+        numBombs.setValue(numBombs.getValue() - 1);
     }
     private void incrementNumBomb()
     {
-        numBombs++;
+        numBombs.setValue(numBombs.getValue() + 1);
     }
-
-
 }

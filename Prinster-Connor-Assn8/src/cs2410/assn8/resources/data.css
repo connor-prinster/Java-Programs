@@ -26,7 +26,7 @@
 
 .openNoBomb /*just a normal cell*/
 {
-    -fx-background-color: lightgrey;
+    -fx-background-color: lightgray;
     -fx-border-color: darkgrey;
     -fx-border-width: 1px;
 }

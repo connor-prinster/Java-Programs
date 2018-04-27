@@ -55,19 +55,26 @@ public class CustomCell extends Button
         setAlignment(Pos.CENTER);
     }
 
-    public boolean uncoverCellCheckSafe()
+    public void uncoverIndividualCell()
     {
         isOpen = true;
-        getStyleClass().clear();
-        if(isBomb)
-        {
-            getStyleClass().add("openYesBomb");
-            return false;
+        if (getStyleClass().contains("completelyUnmarkedBombCell")) {
+            getStyleClass().clear();
+            getStyleClass().add("completelyUnmarkedBombCell");
+        } else if (getStyleClass().contains("successfullyMarkedBombCell")) {
+            getStyleClass().clear();
+            getStyleClass().add("successfullyMarkedBombCell");
+        } else if (getStyleClass().contains("unsuccessfullyMarkedBombCell")) {
+            getStyleClass().clear();
+            getStyleClass().add("unsuccessfullyMarkedBombCell");
+        } else {
+            getStyleClass().clear();
         }
-        else
-        {
-            getStyleClass().add("openNoBomb");
-            return true;
+        getStyleClass().add("openNoBomb");
+        if (isBomb) {
+            getStyleClass().add("openYesBomb");
+        } else if (numNeighborBombs > 0) {
+            setText(Integer.toString(numNeighborBombs));
         }
     }
 
@@ -88,6 +95,11 @@ public class CustomCell extends Button
     public int getFlaggedState()
     {
         return flaggedState;
+    }
+
+    public int getNeighborCount()
+    {
+        return numNeighborBombs;
     }
 
     //==========================================//
