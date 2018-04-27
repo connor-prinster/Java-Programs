@@ -41,12 +41,6 @@ public class Scoreboard
         timer.purge();
     }
 
-    /**getter for 'time'*/
-    public LongProperty returnTime()
-    {
-        return time;
-    }
-
     /**returns a nice string for what will appear on the time: * on the top of the gameboard*/
     public String formatTimeString()
     {
@@ -54,5 +48,11 @@ public class Scoreboard
         int min = (int) ((time.getValue()/60) % 60);
         int sec = (int) (time.getValue() % 60);
         return String.format("%02d:%02d:%02d", hrs, min, sec);
+    }
+
+    /**getter for 'time'*/
+    public LongProperty returnTime()
+    {
+        return time;
     }
 }
