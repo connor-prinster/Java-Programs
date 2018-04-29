@@ -11,11 +11,11 @@ public class SoundPlayer
 
     private MediaPlayer player;
 
-    private MediaPlayer bombPlayer = new MediaPlayer(new Media(new File("src/cs2410/assn8/data/bomb.mp3").toURI().toString()));
-    private MediaPlayer loseThemePlayer = new MediaPlayer(new Media(new File("src/cs2410/assn8/data/endGameTheme.mp3").toURI().toString()));
-    private MediaPlayer openTilePlayer = new MediaPlayer(new Media(new File("src/cs2410/assn8/data/openTile.mp3").toURI().toString()));
-    private MediaPlayer toggleFlagPlayer = new MediaPlayer(new Media(new File("src/cs2410/assn8/data/flagToggle.mp3").toURI().toString()));
-    private MediaPlayer winPlayer = new MediaPlayer(new Media(new File("src/cs2410/assn8/data/win.mp3").toURI().toString()));
+    private MediaPlayer bombPlayer = new MediaPlayer(new Media(new File("data/bomb.mp3").toURI().toString()));
+    private MediaPlayer loseThemePlayer = new MediaPlayer(new Media(new File("data/endGameTheme.mp3").toURI().toString()));
+    private MediaPlayer openTilePlayer = new MediaPlayer(new Media(new File("data/openTile.mp3").toURI().toString()));
+    private MediaPlayer toggleFlagPlayer = new MediaPlayer(new Media(new File("data/flagToggle.mp3").toURI().toString()));
+    private MediaPlayer winPlayer = new MediaPlayer(new Media(new File("data/win.mp3").toURI().toString()));
 
     public void setToggleFlagPlayer()
     {
