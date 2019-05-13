@@ -2,7 +2,7 @@
 
 ## Core Java
 
-* Describe the lifecycle of an object instance in Java and how garbage collection works
+* ~~Describe the lifecycle of an object instance in Java and how garbage collection works~~
     * **Lifecycle**
         * class must be *loaded* from the *.class* file
         * the *new* keyword puts the object in memory with a reference
@@ -14,8 +14,19 @@
         * no memory is given back to operating system, but the memory is allocated for further use by the program
         * this is cheaper because it's easier to create an object than firmly delete them
     
-* Describe how the basic data types are represented in memory (boolean, int, long, String, array of ints, array of objects, class w/ fields)
-
+* ~~Describe how the basic data types are represented in memory (boolean, int, long, String, array of ints, array of objects, class w/ fields)~~
+    * Boolean: single bit, 1 or 0
+    * Byte: 8 bits
+    * Char: 16 bits
+    * short: 16 bits
+    * int: 32 bits
+    * long: 64 bits
+    * float: 32 bits
+    * double: 64 bits
+    * String: held in *Java String Pool*. Will only store a single copy of each variable (will search to see if there is an equivalent string elsewhere)
+    * Int Arrays: array of pointers
+    * Object Arrays: array of pointers to objects
+    * Class w/ Fields:
 
 * Write an application to find out how many total characters can be held in a list of strings before you run out of memory
 
@@ -32,7 +43,7 @@
 * Write an application to read a file with 10k lines of text, and output another file with the lines in reverse sorted order
 
 
-* Write code to show exception handling inlcuding examples of checked, unchecked, and error exceptions
+* Write code to show exception handling including examples of checked, unchecked, and error exceptions
 
 
 * write your own enum type. Describe when you would use it.
