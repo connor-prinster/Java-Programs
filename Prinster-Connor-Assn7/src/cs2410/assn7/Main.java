@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application
 {
-    //making sure that all members of the Main.java are accessible.
+    //making sure that all members of the CompositionExample.java are accessible.
     ColorPanelController cpc;
     //ScoreBarController sbc;
 
