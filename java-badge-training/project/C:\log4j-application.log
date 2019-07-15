@@ -3322,3 +3322,144 @@ Response Object from null
 2019-07-15 08:00:38 ERROR Main:65 - Something went wrong with the GET call: java.net.UnknownHostException: thisIsFake.logCom: nodename nor servname provided, or not known
 2019-07-15 08:00:38 FATAL Main:41 - The url 'null' will throw a null pointer error
 2019-07-15 08:00:38 ERROR Main:34 - Something went wrong with the web call: java.lang.NullPointerException
+2019-07-15 12:08:42 ERROR Main:65 - Something went wrong with the GET call: java.net.UnknownHostException: thisIsFake.logCom: nodename nor servname provided, or not known
+2019-07-15 12:08:42 FATAL Main:41 - The url 'null' will throw a null pointer error
+2019-07-15 12:08:42 ERROR Main:34 - Something went wrong with the web call: java.lang.NullPointerException
+2019-07-15 12:09:38 INFO  Main:45 - 'http://dnd5eapi.co/api/spells/1' is most likely a valid url
+2019-07-15 12:09:38 DEBUG BasicClientConnectionManager:161 - Get connection for route {}->http://dnd5eapi.co:80
+2019-07-15 12:09:38 DEBUG DefaultClientConnectionOperator:177 - Connecting to dnd5eapi.co:80
+2019-07-15 12:09:38 DEBUG RequestAddCookies:123 - CookieSpec selected: default
+2019-07-15 12:09:38 DEBUG RequestAuthCache:77 - Auth cache not set in the context
+2019-07-15 12:09:38 DEBUG RequestTargetAuthentication:80 - Target auth state: UNCHALLENGED
+2019-07-15 12:09:38 DEBUG RequestProxyAuthentication:89 - Proxy auth state: UNCHALLENGED
+2019-07-15 12:09:38 DEBUG DefaultHttpClient:677 - Attempt 1 to execute request
+2019-07-15 12:09:38 DEBUG DefaultClientConnection:274 - Sending request: GET /api/spells/1 HTTP/1.1
+2019-07-15 12:09:38 DEBUG wire:73 -  >> "GET /api/spells/1 HTTP/1.1[\r][\n]"
+2019-07-15 12:09:38 DEBUG wire:73 -  >> "Host: dnd5eapi.co[\r][\n]"
+2019-07-15 12:09:38 DEBUG wire:73 -  >> "Connection: Keep-Alive[\r][\n]"
+2019-07-15 12:09:38 DEBUG wire:73 -  >> "User-Agent: Apache-HttpClient/4.5.9 (Java/1.8.0_212)[\r][\n]"
+2019-07-15 12:09:38 DEBUG wire:73 -  >> "[\r][\n]"
+2019-07-15 12:09:38 DEBUG headers:278 - >> GET /api/spells/1 HTTP/1.1
+2019-07-15 12:09:38 DEBUG headers:281 - >> Host: dnd5eapi.co
+2019-07-15 12:09:38 DEBUG headers:281 - >> Connection: Keep-Alive
+2019-07-15 12:09:38 DEBUG headers:281 - >> User-Agent: Apache-HttpClient/4.5.9 (Java/1.8.0_212)
+2019-07-15 12:09:39 DEBUG wire:73 -  << "HTTP/1.1 302 Found[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "Location: http://www.dnd5eapi.co/api/spells/1[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "Date: Mon, 15 Jul 2019 18:09:38 GMT[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "Content-Type: text/html; charset=UTF-8[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "Server: ghs[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "Content-Length: 232[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "X-XSS-Protection: 0[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "X-Frame-Options: SAMEORIGIN[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "[\r][\n]"
+2019-07-15 12:09:39 DEBUG DefaultClientConnection:259 - Receiving response: HTTP/1.1 302 Found
+2019-07-15 12:09:39 DEBUG headers:262 - << HTTP/1.1 302 Found
+2019-07-15 12:09:39 DEBUG headers:265 - << Location: http://www.dnd5eapi.co/api/spells/1
+2019-07-15 12:09:39 DEBUG headers:265 - << Date: Mon, 15 Jul 2019 18:09:38 GMT
+2019-07-15 12:09:39 DEBUG headers:265 - << Content-Type: text/html; charset=UTF-8
+2019-07-15 12:09:39 DEBUG headers:265 - << Server: ghs
+2019-07-15 12:09:39 DEBUG headers:265 - << Content-Length: 232
+2019-07-15 12:09:39 DEBUG headers:265 - << X-XSS-Protection: 0
+2019-07-15 12:09:39 DEBUG headers:265 - << X-Frame-Options: SAMEORIGIN
+2019-07-15 12:09:39 DEBUG DefaultHttpClient:504 - Connection can be kept alive indefinitely
+2019-07-15 12:09:39 DEBUG DefaultRedirectStrategy:140 - Redirect requested to location 'http://www.dnd5eapi.co/api/spells/1'
+2019-07-15 12:09:39 DEBUG DefaultHttpClient:1090 - Resetting target auth state
+2019-07-15 12:09:39 DEBUG DefaultHttpClient:1106 - Redirecting to 'http://www.dnd5eapi.co/api/spells/1' via {}->http://www.dnd5eapi.co:80
+2019-07-15 12:09:39 DEBUG wire:73 -  << "<HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">[\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "<TITLE>302 Moved</TITLE></HEAD><BODY>[\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "<H1>302 Moved</H1>[\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "The document has moved[\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "<A HREF="http://www.dnd5eapi.co/api/spells/1">here</A>.[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "</BODY></HTML>[\r][\n]"
+2019-07-15 12:09:39 DEBUG BasicClientConnectionManager:200 - Releasing connection org.apache.http.impl.conn.ManagedClientConnectionImpl@1b604f19
+2019-07-15 12:09:39 DEBUG BasicClientConnectionManager:225 - Connection can be kept alive indefinitely
+2019-07-15 12:09:39 DEBUG BasicClientConnectionManager:161 - Get connection for route {}->http://www.dnd5eapi.co:80
+2019-07-15 12:09:39 DEBUG DefaultClientConnection:180 - Connection 0.0.0.0:62070<->216.239.32.21:80 closed
+2019-07-15 12:09:39 DEBUG DefaultClientConnectionOperator:177 - Connecting to www.dnd5eapi.co:80
+2019-07-15 12:09:39 DEBUG RequestAddCookies:123 - CookieSpec selected: default
+2019-07-15 12:09:39 DEBUG RequestAuthCache:77 - Auth cache not set in the context
+2019-07-15 12:09:39 DEBUG RequestTargetAuthentication:80 - Target auth state: UNCHALLENGED
+2019-07-15 12:09:39 DEBUG RequestProxyAuthentication:89 - Proxy auth state: UNCHALLENGED
+2019-07-15 12:09:39 DEBUG DefaultHttpClient:677 - Attempt 2 to execute request
+2019-07-15 12:09:39 DEBUG DefaultClientConnection:274 - Sending request: GET /api/spells/1 HTTP/1.1
+2019-07-15 12:09:39 DEBUG wire:73 -  >> "GET /api/spells/1 HTTP/1.1[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  >> "Host: www.dnd5eapi.co[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  >> "Connection: Keep-Alive[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  >> "User-Agent: Apache-HttpClient/4.5.9 (Java/1.8.0_212)[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  >> "[\r][\n]"
+2019-07-15 12:09:39 DEBUG headers:278 - >> GET /api/spells/1 HTTP/1.1
+2019-07-15 12:09:39 DEBUG headers:281 - >> Host: www.dnd5eapi.co
+2019-07-15 12:09:39 DEBUG headers:281 - >> Connection: Keep-Alive
+2019-07-15 12:09:39 DEBUG headers:281 - >> User-Agent: Apache-HttpClient/4.5.9 (Java/1.8.0_212)
+2019-07-15 12:09:39 DEBUG wire:73 -  << "HTTP/1.1 200 OK[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "Server: Cowboy[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "Connection: keep-alive[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "X-Powered-By: Express[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "Access-Control-Allow-Origin: *[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "Content-Type: application/json; charset=utf-8[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "Content-Length: 1193[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "Etag: W/"4a9-bbkSLfEe3jX96KYJqtj1HQ"[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "Date: Mon, 15 Jul 2019 18:09:39 GMT[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "Via: 1.1 vegur[\r][\n]"
+2019-07-15 12:09:39 DEBUG wire:73 -  << "[\r][\n]"
+2019-07-15 12:09:39 DEBUG DefaultClientConnection:259 - Receiving response: HTTP/1.1 200 OK
+2019-07-15 12:09:39 DEBUG headers:262 - << HTTP/1.1 200 OK
+2019-07-15 12:09:39 DEBUG headers:265 - << Server: Cowboy
+2019-07-15 12:09:39 DEBUG headers:265 - << Connection: keep-alive
+2019-07-15 12:09:39 DEBUG headers:265 - << X-Powered-By: Express
+2019-07-15 12:09:39 DEBUG headers:265 - << Access-Control-Allow-Origin: *
+2019-07-15 12:09:39 DEBUG headers:265 - << Content-Type: application/json; charset=utf-8
+2019-07-15 12:09:39 DEBUG headers:265 - << Content-Length: 1193
+2019-07-15 12:09:39 DEBUG headers:265 - << Etag: W/"4a9-bbkSLfEe3jX96KYJqtj1HQ"
+2019-07-15 12:09:39 DEBUG headers:265 - << Date: Mon, 15 Jul 2019 18:09:39 GMT
+2019-07-15 12:09:39 DEBUG headers:265 - << Via: 1.1 vegur
+2019-07-15 12:09:39 DEBUG DefaultHttpClient:504 - Connection can be kept alive indefinitely
+2019-07-15 12:09:39 DEBUG wire:87 -  << "{"_id":"5bce91f95b7768e7920184d6","index":1,"name":"Acid Arrow","desc":["A shimmering green arrow streaks toward a target within range and bursts in a spray of acid. Make a ranged spell attack against the target. On a hit, the target takes 4d4 acid damage immediately and 2d4 acid damage at the end of its next turn. On a miss, the arrow splashes the target with acid for half as much of the initial damage and no damage at the end of its next turn."],"higher_level":["When you cast this spell using a spell slot of 3rd level or higher, the damage (both initial and later) increases by 1d4 for each slot level above 2nd."],"page":"phb 259","range":"90 feet","components":["V","S","M"],"material":"Powdered rhubarb leaf and an adder[0xc3][0xa2][0xe2][0x82][0xac][0xe2][0x84][0xa2]s stomach.","ritual":"no","duration":"Instantaneous","concentration":"no","casting_time":"1 action","level":2,"school":{"name":"Evocation","url":"http://www.dnd5eapi.co/api/magic-schools/5"},"classes":[{"url":"http://www.dnd5eapi.co/api/classes/12","name":"Wizard"}],"subclasses":[{"url":"http://www.dnd5eapi.co/api/subclasses/2","name":"Lore"},{"url":"http://www.dnd5eapi.co/api/subclasses/4","name":"Land"}],"url":"http://www.dnd5eapi.co/api/spells/1"}"
+2019-07-15 12:09:39 DEBUG BasicClientConnectionManager:200 - Releasing connection org.apache.http.impl.conn.ManagedClientConnectionImpl@28d25987
+2019-07-15 12:09:39 DEBUG BasicClientConnectionManager:225 - Connection can be kept alive indefinitely
+2019-07-15 12:09:39 INFO  Main:32 - Info: http://dnd5eapi.co/api/spells/1 returned 
+Response Object from http://www.dnd5eapi.co/api/spells/1
+	id: 5bce91f95b7768e7920184d6
+	index: 1.0
+	name: Acid Arrow
+	description: [A shimmering green arrow streaks toward a target within range and bursts in a spray of acid. Make a ranged spell attack against the target. On a hit, the target takes 4d4 acid damage immediately and 2d4 acid damage at the end of its next turn. On a miss, the arrow splashes the target with acid for half as much of the initial damage and no damage at the end of its next turn.]
+	higher level stats: [When you cast this spell using a spell slot of 3rd level or higher, the damage (both initial and later) increases by 1d4 for each slot level above 2nd.]
+	page: phb 259
+	range: 90 feet
+	components: [V, S, M]
+	material: Powdered rhubarb leaf and an adderâ€™s stomach.
+	ritual: no
+	duration: Instantaneous
+	concentration: no
+	casting_time: 1 action
+	level: 2.0
+	school: {name=Evocation, url=http://www.dnd5eapi.co/api/magic-schools/5}
+	classes: [{url=http://www.dnd5eapi.co/api/classes/12, name=Wizard}]
+	subclasses: [{url=http://www.dnd5eapi.co/api/subclasses/2, name=Lore}, {url=http://www.dnd5eapi.co/api/subclasses/4, name=Land}]
+2019-07-15 12:09:39 WARN  Main:43 - 'http://thisIsFake.logCom' may not be a valid url
+2019-07-15 12:09:39 DEBUG BasicClientConnectionManager:161 - Get connection for route {}->http://thisIsFake.logCom:80
+2019-07-15 12:09:39 DEBUG DefaultClientConnection:180 - Connection org.apache.http.impl.conn.DefaultClientConnection@694e1548 closed
+2019-07-15 12:09:39 DEBUG DefaultClientConnection:164 - Connection org.apache.http.impl.conn.DefaultClientConnection@694e1548 shut down
+2019-07-15 12:09:39 DEBUG BasicClientConnectionManager:200 - Releasing connection org.apache.http.impl.conn.ManagedClientConnectionImpl@1c3a4799
+2019-07-15 12:09:39 ERROR Main:65 - Something went wrong with the GET call: java.net.UnknownHostException: thisIsFake.logCom: nodename nor servname provided, or not known
+2019-07-15 12:09:39 INFO  Main:32 - Info: http://thisIsFake.logCom returned 
+Response Object from null
+	id: null
+	index: 0.0
+	name: null
+	description: null
+	higher level stats: null
+	page: null
+	range: null
+	components: null
+	material: null
+	ritual: null
+	duration: null
+	concentration: null
+	casting_time: null
+	level: 0.0
+	school: null
+	classes: null
+	subclasses: null
+2019-07-15 12:09:39 FATAL Main:41 - The url 'null' will throw a null pointer error
+2019-07-15 12:09:39 ERROR Main:34 - Something went wrong with the web call: java.lang.NullPointerException

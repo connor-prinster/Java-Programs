@@ -44,7 +44,23 @@ class Overload {
     }
 
     protected void print() {
-        System.out.println("printed with:" + "\none = " + this.one + "\ntwo = " + this.two + "\nthree = " + this.three + "\nfour = " + this.four);
+        System.out.println("printed with:" 
+        + "\none = " 
+        + this.one 
+        + "\ntwo = " 
+        + this.two 
+        + "\nthree = " 
+        + this.three 
+        + "\nfour = " 
+        + this.four);
+    }
 
+    public void overloading() {
+        System.out.println("Using the normal method")
+        overloading()
+    }
+
+    public void overloading() {
+        System.out.println("working with the overloaded method")
     }
 }

@@ -61,8 +61,7 @@ class BadEncapsulation {
         this.dateMade = dateMade;
     }
 
-    //getting the date isn't necessarily bad, but can be
-    // in other ways.
+    //getting the date isn't necessarily bad
     public Date getDateMade() {
         return dateMade;
     }

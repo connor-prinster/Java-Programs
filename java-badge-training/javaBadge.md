@@ -39,7 +39,7 @@
     * StringBuilder:
         * not thread safe
         * mutable sequence of characters
-        * very similar to StringBuffer, and is faster
+        * very similar to StringBuffer, but is faster as it is NOT thread safe
         * designed for use as replacement for StringBuffer where the buffer was being used by a single thread
 
 
@@ -85,6 +85,7 @@
     * by composition
     * by inheritance
     * by static method calls
+
     discuss the tradeoffs 
     
     for example: two different classes that write a message to a file, one in XML, one in line-oriented text, but both need to reuse logic to open the file in the same way
@@ -115,7 +116,7 @@
         * helps in writing generic code
         * can use the super class as well as some custom code
     * minuses
-        * may not be necessary but will attempt it anyways
+        * may not be necessary but will attempt it anyways, only making it far too complex
 
 * Show how to overload constructors and methods, talk about plusses and minuses in doing so.
     * see `./overloading`
