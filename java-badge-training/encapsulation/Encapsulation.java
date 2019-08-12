@@ -1,4 +1,7 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 public class Encapsulation {
     public static void main(String[] args) {
@@ -17,6 +20,8 @@ public class Encapsulation {
 class GoodEncapsulation {
     private int counter;
 
+    private List list = new ArrayList<>();
+
     GoodEncapsulation(int counter) {
         this.counter = counter;
     }
@@ -28,6 +33,11 @@ class GoodEncapsulation {
     void decrementCounter() {
         this.counter--;
     }
+
+    // good
+    List returnList() {
+        return Collections.unmodifiableList(list);
+    }
 }
 
 class BadEncapsulation {
@@ -36,12 +46,18 @@ class BadEncapsulation {
     private Date dateMade;
     private int counter;
     private String otherStuffNotNecessarilyScaryToChange;
+    private List list = new ArrayList();
 
     BadEncapsulation() {
         this.id = (int)(Math.random() * 100);
         this.dateMade = new Date();
         this.counter = 0;
         this.otherStuffNotNecessarilyScaryToChange = "this is other stuff not necessarily cool or necessarily scary";
+    }
+
+    // can modify actual list
+    List returnList() {
+        return list;
     }
 
     //this should not be able to be set id again,

@@ -10,9 +10,7 @@ class Override {
 }
 
 class Parent {
-  Parent() {
-
-  }
+  Parent() { }
 
   @java.lang.Override
   public String toString() {

@@ -112,9 +112,26 @@
         * can use the super class as well as some custom code
     * minuses
         * may not be necessary but will attempt it anyways, only making it far too complex
+        * overriding may cause confusion
 
 * Show how to overload constructors and methods, talk about plusses and minuses in doing so.
     * see `./overloading`
+    * *plusses*
+        * more convenient than writing a whole other method that only takes
+        an extra parameter
+        * can be easier to read
+    * *minuses* 
+        * Easy to accidentally have the body of one overloaded function not match the body
+        or functionality of the other. An example of a accidental overload would be
+        the two functions below. 
+        ```java
+          public int sum(int a, int b) {
+            return a + b;
+          }
+          public int sum(int a, int b, int c) {
+            return a - b - c;
+          }
+        ```
 
 ## Library
 

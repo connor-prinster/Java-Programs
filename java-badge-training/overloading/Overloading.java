@@ -26,7 +26,6 @@ class Overload {
 
     Overload(int one) {
         this(one, 2);
-
     }
 
     Overload(int one, int two) {
