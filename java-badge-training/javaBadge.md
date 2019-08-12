@@ -68,7 +68,6 @@
 * Write an application to read a file with 10k lines of text, and output another file with the lines in sorted order
     * see `./tenThousandSorted`
 
-
 * Write an application to read a file with 10k lines of text, and output another file with the lines in reverse sorted order
     * see `./tenThousandSorted`
 
@@ -80,16 +79,12 @@
 
 ## Working w/ Methods, Encapsulation, and Inheritance
 
-**HELP**
 * Show how to use a common piece of logic from two different classes, in three different ways:
     * by composition
     * by inheritance
     * by static method calls
 
     discuss the tradeoffs 
-    
-    for example: two different classes that write a message to a file, one in XML, one in line-oriented text, but both need to reuse logic to open the file in the same way
-
     * see `./compositionInheritance`
 
 *   Create and overload constructors -- Create a class that has 4 fields and construct the class with variations of one required field and the others are optional.  Use constructor chaining as an example. 
@@ -118,8 +113,26 @@
     * minuses
         * may not be necessary but will attempt it anyways, only making it far too complex
 
+        * overriding may cause confusion
+
 * Show how to overload constructors and methods, talk about plusses and minuses in doing so.
     * see `./overloading`
+    * *plusses*
+        * more convenient than writing a whole other method that only takes
+        an extra parameter
+        * can be easier to read
+    * *minuses* 
+        * Easy to accidentally have the body of one overloaded function not match the body
+        or functionality of the other. An example of a accidental overload would be
+        the two functions below. 
+        ```java
+          public int sum(int a, int b) {
+            return a + b;
+          }
+          public int sum(int a, int b, int c) {
+            return a - b - c;
+          }
+        ```
 
 ## Library
 
