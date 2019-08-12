@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"cs2410.assn4"},{"l":"cs2410.assn4.controller"},{"l":"cs2410.assn4.interfaces"},{"l":"cs2410.assn4.model"}]
